@@ -9,10 +9,10 @@ export default function Layout({ preview, children }) {
       <Meta />
       <div className="min-h-screen">
         <main>
-        <Container>
-        <Header />
-        {children}
-        </Container>
+          <Container>
+            <Header />
+            {children}
+          </Container>
         </main>
       </div>
     </>
