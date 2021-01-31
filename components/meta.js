@@ -35,7 +35,7 @@ export default function Meta() {
         name="description"
         content={`Know more about Simon`}
       />
-      <meta property="og:image" content="/assets/blog/site/me.png"/>
+      <meta property="og:image" content="/assets/blog/site/me.jpg"/>
     </Head>
   )
 }
