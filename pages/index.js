@@ -5,6 +5,7 @@ import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 
+
 export default function Index({ allPosts }) {
   return (
     <>
