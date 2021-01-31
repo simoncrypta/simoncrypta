@@ -1,4 +1,6 @@
 import Meta from '../components/meta'
+import Container from '../components/container'
+import Header from '../components/header'
 
 
 export default function Layout({ preview, children }) {
@@ -6,7 +8,12 @@ export default function Layout({ preview, children }) {
     <>
       <Meta />
       <div className="min-h-screen">
-        <main>{children}</main>
+        <main>
+        <Container>
+        <Header />
+        {children}
+        </Container>
+        </main>
       </div>
     </>
   )

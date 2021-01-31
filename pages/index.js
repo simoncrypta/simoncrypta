@@ -1,4 +1,3 @@
-import Container from '../components/container'
 import Stories from '../components/stories'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
@@ -13,10 +12,8 @@ export default function Index({ allPosts }) {
         <Head>
           <title>simoncrypta.dev</title>
         </Head>
-        <Container>
           <Intro />
           {allPosts.length > 0 && <Stories posts={allPosts} />}
-        </Container>
       </Layout>
     </>
   )
