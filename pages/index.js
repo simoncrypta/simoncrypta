@@ -13,7 +13,7 @@ export default function Index({ allPosts }) {
           <title>simoncrypta.dev</title>
         </Head>
           <Intro />
-          {allPosts.length > 0 && <Stories posts={allPosts} />}
+          {allPosts.length > 1 && <Stories posts={allPosts} />}
       </Layout>
     </>
   )
