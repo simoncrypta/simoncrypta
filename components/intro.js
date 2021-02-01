@@ -1,21 +1,29 @@
-import { CMS_NAME } from '../lib/constants'
+
 
 export default function Intro() {
   return (
-    <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
-      <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-        Blog.
-      </h1>
-      <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
-        A statically generated blog example using{' '}
-        <a
-          href="https://nextjs.org/"
-          className="underline hover:text-success duration-200 transition-colors"
-        >
-          Next.js
-        </a>{' '}
-        and {CMS_NAME}.
-      </h4>
+    <section className="mt-16 mb-16 md:mb-12">
+      <p className="text-lg mt-5 md:pl-8">
+        Hello, my name is Simon.
+        <br />
+        I'm a full-stack Javascript developer, currently in love with <a className="text-green-600" href="https://jamstack.org">JAMstack</a> and Serverless.
+      </p>
+      <p className="text-lg mt-5 md:pl-8">
+        I build cool stuff for <a className="text-green-600"href="https://lemacurbain.com">Le Mac Urbain</a>.
+        <br />
+        Also, I have a big project name <a className="text-green-600"href="https://raccoon.services">Raccoon</a>.
+      </p>
+
+      <p className="text-lg mt-5 md:pl-8">
+        You can follow me on <a className="text-green-600"href="https://twitter.com/SimonCrypta">Twitter</a>,<br />
+        Connect with me on <a className="text-green-600"href="https://www.linkedin.com/in/gagnonsim/">Linkedin</a>,<br />
+        or check my <a className="text-green-600"href="https://github.com/simoncrypta">Github</a>.<br />
+      </p>
+
+      <p className="text-lg mt-5 md:pl-8">
+        Feel free to chat with me 👋
+      </p>
+
     </section>
   )
 }
