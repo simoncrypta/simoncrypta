@@ -1,1 +1,1 @@
-Explorer la vie dans le moment présent
+*Crypta : Latin word for vault, also the French verb for encrypt, "crypter", in third-person singular past historic.*
