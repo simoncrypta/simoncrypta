@@ -51,10 +51,8 @@ menu = "main"
 - Calendar
 - Safari
 - Slack
-- Smart Stack Widget
 
 ## Bonus: My coffee setup
-![Coffee Setup](/images/coffee-setup.jpg)
 
 - Aeropress
 - Hario V60 Switch
