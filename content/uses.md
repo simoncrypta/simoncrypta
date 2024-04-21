@@ -6,19 +6,21 @@ menu = "main"
 # A glimpse into my office
 
 ## On my Desk
-![Desk](/images/desk.jpg)
 
+- Eero 6
+- Rasberry Pi 4
 - MacBook Pro 15"
-- iPhone 15
 - Inkbird CO2 Monitor
+- Verilux lamp
+- Samsung Odyssey Neo G9 monitor
+- Xiaomi Mi Monitor Light Bar
+- ONO Roller and Scroller fidget toys
 - Keychron Q1 Keyboard (mod)
 - Razer DeathAdder v2 Mouse
-- Samsung Odyssey Neo G9 monitor
-- Branch Ergonomic Chair
 - Ikea UPPSPEL Desk
+- Branch Ergonomic Chair
 
-### On My MacBook
-![MacBook Screenshot](/images/Screenshot-m.jpg)
+## On My MacBook
 
 - Arc Browser
 - VS Code
@@ -27,8 +29,7 @@ menu = "main"
 - Hyper
 - Raycast
 
-### On My iPhone
-![iPhone Screenshot](/images/Screenshot-i.jpg)
+## On My iPhone
 
 - Reflect
 - Readwise
@@ -51,17 +52,6 @@ menu = "main"
 - Safari
 - Slack
 - Smart Stack Widget
-
-## On my reading chair
-![Reading Chair](/images/reading-chair.jpg)
-- Kindle Paperwhite
-- Notebook and pen
-- Some books
-
-## On my gardening table
-![Gardening Table](/images/gardening-table.jpg)
-
-- Some plants
 
 ## Bonus: My coffee setup
 ![Coffee Setup](/images/coffee-setup.jpg)
