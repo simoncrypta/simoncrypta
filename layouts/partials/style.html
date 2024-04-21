@@ -1,15 +1,20 @@
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Jersey+25&family=Noto+Sans:ital,wdth,wght@0,62.5..100,500;1,62.5..100,500&display=swap');
+  
   body {
-    font-family: Verdana, sans-serif;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
     margin: auto;
     padding: 20px;
     max-width: 720px;
     text-align: left;
-    background-color: #fff;
+    background-color: #2B2D42;
     word-wrap: break-word;
     overflow-wrap: break-word;
     line-height: 1.5;
-    color: #444;
+    color: #EDF2F4;
   }
 
   h1,
@@ -20,15 +25,18 @@
   h6,
   strong,
   b {
-    color: #222;
+    color: #EDF2F4;
   }
 
   a {
-    color: #3273dc;
-    /*color: #ff5e6c;*/
+    color: #ECDD7B;
   }
 
   .title {
+    font-family: "Jersey 25", sans-serif;
+    font-size: x-large;
+    font-weight: 400;
+    font-style: normal;
     text-decoration: none;
     border: 0;
   }
@@ -39,6 +47,7 @@
 
   nav a {
     margin-right: 10px;
+    font-size: large;
   }
 
   textarea {
@@ -62,9 +71,20 @@
     max-width: 100%;
   }
 
+  textarea,
+  input {
+    background-color: #252525;
+    color: #ddd;
+  }
+
+  .helptext {
+    color: #aaa;
+  }
+
   code {
+    color: #EDF2F4;
     padding: 2px 5px;
-    background-color: #f2f2f2;
+    background-color: #777;
   }
 
   pre code {
@@ -88,7 +108,7 @@
 
   blockquote {
     border-left: 1px solid #999;
-    color: #222;
+    color: #CDE7BE;
     padding-left: 20px;
     font-style: italic;
   }
@@ -98,13 +118,8 @@
     text-align: center;
   }
 
-  .helptext {
-    color: #777;
-    font-size: small;
-  }
-
   .errorlist {
-    color: #eba613;
+    color: #CE8147;
     font-size: small;
   }
 
@@ -123,51 +138,6 @@
   }
 
   ul.blog-posts li a:visited {
-    color: #8b6fcb;
+    color: #CDE7BE;
   }
-
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: #333;
-      color: #ddd;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    strong,
-    b {
-      color: #eee;
-    }
-
-    a {
-      color: #8cc2dd;
-    }
-
-    code {
-      background-color: #777;
-    }
-
-    pre code {
-      color: #ddd;
-    }
-
-    blockquote {
-      color: #ccc;
-    }
-
-    textarea,
-    input {
-      background-color: #252525;
-      color: #ddd;
-    }
-
-    .helptext {
-      color: #aaa;
-    }
-  }
-
 </style>
