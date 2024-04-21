@@ -8,8 +8,5 @@ Also known as [@simoncrypta](https://bsky.app/profile/simoncrypta.bsky.social) o
 
 From Montréal, Canada
 
-<!-- #### Most recent posts
-{{ posts|limit:5 }} -->
-
 ---
 You can contact me at {yourName}@simoncrypta.dev for any good reason 🙂
