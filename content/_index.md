@@ -4,7 +4,7 @@
 ## I'm into software, coffee and social science.
 ### Currently working at [LeftLane Software](https://leftlanesoftware.com/)
 ### [RedwoodJS](https://redwoodjs.com/) Core Team Alumnus
-Also known as [@simoncrypta](https://bsky.app/profile/simoncrypta.bsky.social) on the internet
+Also known as [@simoncrypta](https://bsky.app/profile/simoncrypta.dev) on the internet
 
 From Montréal, Canada
 
