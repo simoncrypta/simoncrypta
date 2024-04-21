@@ -8,7 +8,7 @@ menu = "main"
 ## Work
 ### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
 #### Current projects
-- Fullstack development
+- Full-stack development
 - Infrastructure on [Render.com](https://render.com)
 - Full-stack JavaScript application framework on [RedwoodJS](https://redwoodjs.com/)
 - Payment Processing integration 
@@ -41,3 +41,8 @@ menu = "main"
 - Diablo IV
 - South Park (The Stick of Truth / The Fractured But Whole)
 - We Love Katamari REROLL + Royal Reverie
+
+---
+
+Visit [nownownow.com](https://nownownow.com/) for more /now page  
+[Or add your own now page](https://nownownow.com/about)
