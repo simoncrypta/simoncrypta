@@ -4,6 +4,7 @@ menu = "main"
 +++
 
 # What I'm doing now
+*Updated on May 5, 2024*
 
 ## Work
 ### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
@@ -22,6 +23,7 @@ menu = "main"
 ## Reading
 - Designing Your Life: How to Build a Well-Lived, Joyful Life by Bill Burnett and Dave Evans
 - Feel-Good Productivity: How to Do More of What Matters to You by Ali Abdaal
+- Useful Not True (Early access) by Derek Sivers
 
 ## Music
 ### Recently Added
