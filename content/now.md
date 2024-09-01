@@ -4,39 +4,33 @@ menu = "main"
 +++
 
 # What I'm doing now
-*Updated on May 5, 2024*
+*Updated on Sept 1, 2024*
 
 ## Work
 ### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
 #### Current projects
-- Full-stack development
+- Full-stack TS development with [RedwoodJS](https://redwoodjs.com/)
 - Infrastructure on [Render.com](https://render.com)
-- Full-stack JavaScript application framework on [RedwoodJS](https://redwoodjs.com/)
-- Payment Processing integration 
-- SMS Notification integration
+- Payment Processing integration
+- Document Management Refactoring 
 
 ## Sport
-- cross-discipline fitness / functional fitness at [Squad-Gym Tetreaultville](https://www.facebook.com/squadgymtetreaultville/)
+- Cross-discipline fitness / functional fitness at [Squad-Gym Tetreaultville](https://www.facebook.com/squadgymtetreaultville/)
 - Cycling with [Moose Porter Fixie](https://moosebicycle.com/collections/fixies/products/porter)
-- Yoga and Pilates with [Apple Fitness+](https://www.apple.com/apple-fitness-plus/)
+- Yoga & Mobility with [Pliability](https://pliability.com/)
 
 ## Reading
 - Designing Your Life: How to Build a Well-Lived, Joyful Life by Bill Burnett and Dave Evans
-- Feel-Good Productivity: How to Do More of What Matters to You by Ali Abdaal
-- Useful Not True (Early access) by Derek Sivers
+- In This Economy?: How Money & Market Really Work by Kyla Scanlon
 
 ## Music
 ### Recently Added
-- Mr. Oizo Essentials
-- Gold Panda Essentials
-- New in Electronic
-- Four Tet Essentials
-- French Touch Essentials
-- Hyperdrama by Jutice
-- Forward by Jordan Ward
+- Hole Erth by Toro y Moi
+- Bando Stone and The New World by Childish Gambino
+- Head Rush by Channel Tres
+- Timeless by Kaytranada
 - Why Lawd? by NxWorries 
-- Lahai by Sampha
-
+- A LA SALA by Khruangbin
 
 ## Game
 - Fortnite

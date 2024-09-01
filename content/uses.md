@@ -4,11 +4,11 @@ menu = "main"
 +++
 
 # A glimpse into my office
+*Updated on Sept 1, 2024*
 
 ## On my Desk
 
 - Eero 6
-- Rasberry Pi 4
 - MacBook Pro 15"
 - Inkbird CO2 Monitor
 - Verilux lamp
@@ -28,6 +28,7 @@ menu = "main"
 - Slask
 - Hyper
 - Raycast
+- Structured
 
 ## On My iPhone
 
@@ -35,21 +36,17 @@ menu = "main"
 - Readwise
 - Planta
 - BoldVoice
+- Pliability
+- Athlytic
+- MealPrepPro
 - Peaks
-- Endel
-- Pi
-- Fitness
+- Structured
 - YNAB
-- Banks app
 - Podcasts
 - Music
-- Find My
-- Google Maps
-- Parcel
-- Axios
 - Photos
 - Calendar
-- Safari
+- Arc Search
 - Slack
 
 ## Bonus: My coffee setup
