@@ -4,7 +4,7 @@ menu = "main"
 +++
 
 # A glimpse into my office
-*Updated on Sept 1, 2024*
+*Updated on 01 Sep, 2024*
 
 ## On my Desk
 

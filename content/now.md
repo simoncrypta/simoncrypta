@@ -2,9 +2,8 @@
 title = "Now"
 menu = "main"
 +++
-
 # What I'm doing now
-*Updated on Sept 1, 2024*
+*Updated on 01 Sep, 2024*
 
 ## Work
 ### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
