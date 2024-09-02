@@ -2,6 +2,7 @@
 <meta name="title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}" />
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}" />
 <meta name="keywords" content="{{ range $plural, $terms := .Site.Taxonomies }}{{ range $term, $val := $terms }}{{ printf "%s," $term }}{{ end }}{{ end }}" />
+<meta name="author" content="simoncrypta">
 <!-- Open Graph / Facebook -->
 <meta name="og:image" content="/image.png" />
 {{ template "_internal/opengraph.html" . }}
