@@ -1,11 +1,30 @@
 <!-- Primary Meta Tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}" />
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}" />
+<meta name="description" content="{{ with .Site.Params.description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}Professional vibe coder sharing contexts and knowledge for every dimension{{ end }}{{ end }}" />
 <meta name="keywords" content="{{ range $plural, $terms := .Site.Taxonomies }}{{ range $term, $val := $terms }}{{ printf "%s," $term }}{{ end }}{{ end }}" />
 <meta name="author" content="simoncrypta">
+<meta name="robots" content="index, follow">
+<meta name="language" content="English">
+<meta name="revisit-after" content="7 days">
+
 <!-- Open Graph / Facebook -->
-<meta name="og:image" content="/image.png" />
-{{ template "_internal/opengraph.html" . }}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}">
+<meta property="og:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ .Site.Params.ogImage | absURL }}{{ end }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}">
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}">
+<meta name="twitter:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ .Site.Params.ogImage | absURL }}{{ end }}">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
 
 <!-- Microdata -->
 {{ template "_internal/schema.html" . }}
