@@ -4,14 +4,12 @@ menu = "main"
 +++
 
 # A glimpse into my office
-*Updated on 01 Sep, 2024*
+*Updated on 12 Apr, 2025*
 
 ## On my Desk
 
-- Eero 6
 - MacBook Pro 15"
 - Inkbird CO2 Monitor
-- Verilux lamp
 - Samsung Odyssey Neo G9 monitor
 - Xiaomi Mi Monitor Light Bar
 - ONO Roller and Scroller fidget toys
@@ -23,37 +21,27 @@ menu = "main"
 ## On My MacBook
 
 - Arc Browser
-- VS Code
-- Reflect
+- Cursor
+- Linear
+- Figma
 - Slask
-- Hyper
+- Ghostty
 - Raycast
-- Structured
 
 ## On My iPhone
 
-- Reflect
 - Readwise
-- Planta
-- BoldVoice
-- Pliability
-- Athlytic
-- MealPrepPro
-- Peaks
-- Structured
-- YNAB
-- Podcasts
-- Music
-- Photos
-- Calendar
-- Arc Search
+- Fluently
+- Monarch
+- Perplexity
+- Grok
 - Slack
 
 ## Bonus: My coffee setup
 
 - Aeropress
 - Hario V60 Switch
-- Flair Espresso Classic (Upgraded)
+- Cafelat Robot
 - Comandante C40
 
 ---
