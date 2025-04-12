@@ -2,11 +2,19 @@
 <html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}">
 
 <head>
-  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {{- partial "favicon.html" . -}}
   <title>{{- block "title" . }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{- end }}</title>
+
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
+  </noscript>
 
   {{- partial "seo_tags.html" . -}}
   <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -16,6 +24,16 @@
   {{ end -}}
 
   {{- partial "style.html" . -}}
+
+  <!-- Font loading script -->
+  <script>
+    if ("fonts" in document) {
+      Promise.all([
+        document.fonts.load("500 1em 'Noto Sans'"),
+        document.fonts.load("400 1em 'Jersey 25'")
+      ]).then(() => document.documentElement.classList.add("fonts-loaded"));
+    }
+  </script>
 
   <!-- A partial to be overwritten by the user.
   Simply place a custom_head.html into

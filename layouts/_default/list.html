@@ -1,9 +1,9 @@
 {{ define "main" }}
-<content>
+<content class="blog">
   {{ if .Data.Singular }}
-  <h3 style="margin-bottom:0">Filtering for "{{ .Title }}"</h3>
+  <h2 style="margin-bottom:0">Filtering for "{{ .Title }}"</h2>
   <small>
-    <a href="{{ "blog" | relURL }}">Remove filter</a>
+    <a href="{{ "blog" | relURL }}" aria-label="Remove filter and return to all posts">Remove filter</a>
   </small>
   {{ end }}
   <ul class="blog-posts">
@@ -16,7 +16,7 @@
           </time>
         </i>
       </span>
-      <a href="{{ .Permalink }}">{{ .Title }}</a>
+      <a href="{{ .Permalink }}" aria-label="Read post: {{ .Title }}">{{ .Title }}</a>
     </li>
     {{ else }}
     <li>
@@ -26,10 +26,10 @@
   </ul>
   {{ if .Data.Singular }}
   {{else}}
-    <small>
+    <small class="tags">
       <div>
         {{ range .Site.Taxonomies.tags }}
-        <a href="{{ .Page.Permalink }}">#{{ .Page.Title }}</a>&nbsp;
+        <a href="{{ .Page.Permalink }}" aria-label="View posts tagged with {{ .Page.Title }}">#{{ .Page.Title }}</a>&nbsp;
         {{ end }}
       </div>
     </small>
