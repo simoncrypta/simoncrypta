@@ -6,6 +6,7 @@ baseURL = "https://simoncrypta.dev"
 title = "Simon's Crypta"
 author = "Simon Gagnon"
 languageCode = "en-us"
+description = "Professional vibe coder sharing contexts and knowledge for every dimension"
 
 # Generate a nice robots.txt for SEO
 enableRobotsTXT = true
