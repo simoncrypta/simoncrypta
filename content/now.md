@@ -3,7 +3,7 @@ title = "Now"
 menu = "main"
 +++
 # What I'm doing now
-*Updated on 12 Apr, 2025*
+*Updated on December 28, 2025*
 
 ## Work
 ### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
@@ -19,20 +19,18 @@ menu = "main"
 - Freestyle downhill ski when it snows ⛷️❄️
 
 ## Reading
-- In This Economy?: How Money & Market Really Work by Kyla Scanlon
-- Quiet: The Power of Introverts in a World That Can't Stop Talking by Susan Cain
-- [Useful Not True](https://sive.rs/u) by Derek solvers
+- The Product Book by Product School
+- Show Your Work by Austin Kleon 
 
 ## Music
 ### Recently Added
-- Joe Kay's Playlist [Soulection Radio]
-- Ravaru by High Klassified
-- Spirit Box by Flying Lotus
-- Chèlbè by Lou Phelps
+- USB by Fred again..
+- Deadbeat by Tame Impala
+- DONT TAP THE GLASS by Tyler, The Creator 
 
 ## Game
 - Fortnite
-- Balatro
+- Heartstone Battleground
 
 ---
 

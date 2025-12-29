@@ -4,37 +4,38 @@ menu = "main"
 +++
 
 # A glimpse into my office
-*Updated on 12 Apr, 2025*
+*Updated on December 28, 2025*
 
 ## On my Desk
 
-- MacBook Pro 15"
+- Computer-1 AMD custom build running Omarchy
 - Inkbird CO2 Monitor
 - Samsung Odyssey Neo G9 monitor
 - Xiaomi Mi Monitor Light Bar
 - ONO Roller and Scroller fidget toys
-- Keychron Q1 Keyboard (mod)
+- ZSA Voyager Keyboard 
 - Razer DeathAdder v2 Mouse
+- Yamaha HS4 Speaker System
+- Jlab Talk Pro Mic
 - Ikea UPPSPEL Desk
 - Branch Ergonomic Chair
 
-## On My MacBook
+## On My Linux
 
-- Arc Browser
+- Brave Browser
 - Cursor
 - Linear
 - Figma
 - Slask
 - Ghostty
-- Raycast
 
 ## On My iPhone
 
 - Readwise
-- Fluently
-- Monarch
+- BoldVoice
+- MyMind
 - Perplexity
-- Grok
+- Spotify
 - Slack
 
 ## Bonus: My coffee setup
@@ -43,6 +44,7 @@ menu = "main"
 - Hario V60 Switch
 - Cafelat Robot
 - Comandante C40
+- Subminimal NanoFoamer Pro Gen2
 
 ---
 
