@@ -116,9 +116,8 @@ async function main() {
       rmSync(DIST_DIR, { recursive: true, force: true });
       console.log("   ✓ Removed existing dist/");
     }
-    mkdirSync(DIST_DIR, { recursive: true });
-    mkdirSync(join(DIST_DIR), { recursive: true });
-    console.log("   ✓ Created fresh dist/\n");
+     mkdirSync(DIST_DIR, { recursive: true });
+     console.log("   ✓ Created fresh dist/\n");
 
     // Phase 2: Copy static assets
     console.log("📁 Phase 2: Copying static assets...");
