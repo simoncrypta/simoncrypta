@@ -1,12 +1,13 @@
-import React from 'react';
+/// <reference path="../../node_modules/@kitajs/html/all-types.d.ts" />
+import type { Children } from '@kitajs/html';
 
 interface PageProps {
   html?: string;
-  children?: React.ReactNode;
+  children?: Children;
   className?: string;
 }
 
-export const Page: React.FC<PageProps> = ({ html, children, className = '' }) => {
+export const Page = ({ html, children, className = '' }: PageProps) => {
   if (html) {
     return (
       <content 

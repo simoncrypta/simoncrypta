@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const Footer: React.FC = () => {
+export function Footer() {
   return (
     <footer>
       <p>From Montréal, Canada 🍁</p>

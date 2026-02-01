@@ -1,10 +1,8 @@
-import React from 'react';
-
 interface HeaderProps {
   currentPath: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
+export function Header({ currentPath }: HeaderProps) {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Now', path: '/now' },
@@ -25,4 +23,4 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
       </nav>
     </header>
   );
-};
+}

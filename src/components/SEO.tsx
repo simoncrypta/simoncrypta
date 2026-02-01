@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SEOProps {
   title?: string;
   description?: string;
@@ -8,13 +6,13 @@ interface SEOProps {
   isArticle?: boolean;
 }
 
-export const SEO: React.FC<SEOProps> = ({ 
+export function SEO({ 
   title, 
   description, 
   url, 
   image,
   isArticle = false 
-}) => {
+}: SEOProps) {
   const siteTitle = "Simon's Crypta";
   const defaultDescription = "Professional vibe coder sharing contexts and knowledge for every dimension";
   const siteUrl = "https://simoncrypta.dev";
@@ -27,7 +25,7 @@ export const SEO: React.FC<SEOProps> = ({
 
   return (
     <>
-      <meta charSet="utf-8" />
+      <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>{finalTitle}</title>
       <meta name="title" content={finalTitle} />
@@ -52,4 +50,4 @@ export const SEO: React.FC<SEOProps> = ({
       <link rel="canonical" href={finalUrl} />
     </>
   );
-};
+}

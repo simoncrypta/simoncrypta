@@ -1,17 +1,9 @@
-import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import type { PropsWithChildren } from "@kitajs/html";
 
-declare module "react/jsx-runtime" {
+declare module "@kitajs/html" {
   namespace JSX {
     interface IntrinsicElements {
-      content: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-    }
-  }
-}
-
-declare module "react" {
-  namespace JSX {
-    interface IntrinsicElements {
-      content: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
+      content: PropsWithChildren<{}>;
     }
   }
 }

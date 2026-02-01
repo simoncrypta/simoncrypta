@@ -1,10 +1,11 @@
-import React from 'react';
+import { Html } from '@kitajs/html';
+import type { Children } from '@kitajs/html';
 import { SEO } from './SEO';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
 interface LayoutProps {
-  children?: React.ReactNode;
+  children?: Children;
   title?: string;
   description?: string;
   siteUrl?: string;
@@ -13,7 +14,7 @@ interface LayoutProps {
   isArticle?: boolean;
 }
 
-export const Layout: React.FC<LayoutProps> = ({
+export function Layout({
   children,
   title,
   description,
@@ -21,7 +22,7 @@ export const Layout: React.FC<LayoutProps> = ({
   currentPath = "/",
   image,
   isArticle = false
-}) => {
+}: LayoutProps) {
   const fontLoaderScript = `
     if ("fonts" in document) {
       Promise.all([
@@ -47,7 +48,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
         <link rel="stylesheet" href="/styles.css" />
         
-        <script dangerouslySetInnerHTML={{ __html: fontLoaderScript }} />
+        <script>{fontLoaderScript}</script>
       </head>
       <body>
         <Header currentPath={currentPath} />

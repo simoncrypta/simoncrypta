@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const NotFound: React.FC = () => {
+export function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
       <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: '"Jersey 25", sans-serif' }}>
@@ -20,4 +18,4 @@ export const NotFound: React.FC = () => {
       </a>
     </div>
   );
-};
+}
