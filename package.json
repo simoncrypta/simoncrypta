@@ -3,8 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun run build.ts",
-    "dev": "bun --watch run build.ts",
+    "build": "bun run build.tsx",
+    "dev": "bun --watch run build.tsx",
     "serve": "bun run serve.ts",
     "preview": "bun run build && bun run serve"
   },

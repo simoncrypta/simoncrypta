@@ -12,8 +12,6 @@
 
 import { rmSync, mkdirSync, cpSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
-import { renderToStaticMarkup } from "react-dom/server";
-import React from "react";
 import { Layout } from "./src/components/Layout";
 import { Page } from "./src/components/Page";
 import { NotFound } from "./src/components/NotFound";
@@ -51,16 +49,16 @@ async function generatePages() {
       mkdirSync(join(DIST_DIR, file.replace('.md', '')), { recursive: true });
     }
     
-    const html = renderToStaticMarkup(
-      React.createElement(Layout, {
-        title: parsed.frontmatter.title || SITE_TITLE,
-        description: SITE_DESCRIPTION,
-        siteUrl: SITE_URL,
-        currentPath: urlPath
-      },
-        React.createElement(Page, { html: parsed.html })
-      )
-    );
+     const html = (
+       <Layout
+         title={parsed.frontmatter.title || SITE_TITLE}
+         description={SITE_DESCRIPTION}
+         siteUrl={SITE_URL}
+         currentPath={urlPath}
+       >
+         <Page html={parsed.html} />
+       </Layout>
+     ) as string;
     
     const fullHtml = `<!DOCTYPE html>\n${html}`;
     await Bun.write(outputPath, fullHtml);
@@ -81,16 +79,16 @@ async function generatePages() {
 }
 
 async function generate404Page() {
-  const html = renderToStaticMarkup(
-    React.createElement(Layout, {
-      title: "404 - Page Not Found | Simon's Crypta",
-      description: "Page not found",
-      siteUrl: SITE_URL,
-      currentPath: "/404"
-    },
-      React.createElement(NotFound)
-    )
-  );
+   const html = (
+     <Layout
+       title="404 - Page Not Found | Simon's Crypta"
+       description="Page not found"
+       siteUrl={SITE_URL}
+       currentPath="/404"
+     >
+       <NotFound />
+     </Layout>
+   ) as string;
   
   const fullHtml = `<!DOCTYPE html>\n${html}`;
   await Bun.write(join(DIST_DIR, '404.html'), fullHtml);
