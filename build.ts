@@ -12,11 +12,6 @@
 
 import { rmSync, mkdirSync, cpSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
-import postcss from "postcss";
-// @ts-expect-error - Tailwind PostCSS plugin types
-import tailwindcss from "@tailwindcss/postcss";
-// @ts-expect-error - Autoprefixer types
-import autoprefixer from "autoprefixer";
 import { renderToStaticMarkup } from "react-dom/server";
 import React from "react";
 import { Layout } from "./src/components/Layout";
@@ -63,11 +58,7 @@ async function generatePages() {
         siteUrl: SITE_URL,
         currentPath: urlPath
       },
-        React.createElement(Page, {},
-          React.createElement('div', { 
-            dangerouslySetInnerHTML: { __html: parsed.html } 
-          })
-        )
+        React.createElement(Page, { html: parsed.html })
       )
     );
     
@@ -141,17 +132,16 @@ async function main() {
     // Phase 3: Build CSS with Tailwind
     console.log("🎨 Phase 3: Building CSS with Tailwind...");
     
-    const cssInput = await Bun.file(CSS_INPUT).text();
+    const tailwindResult = Bun.spawnSync([
+      "bunx", "@tailwindcss/cli",
+      "-i", CSS_INPUT,
+      "-o", CSS_OUTPUT,
+      "--minify"
+    ]);
     
-    const result = await postcss([
-      tailwindcss,
-      autoprefixer,
-    ]).process(cssInput, {
-      from: CSS_INPUT,
-      to: CSS_OUTPUT,
-    });
-
-    await Bun.write(CSS_OUTPUT, result.css);
+    if (tailwindResult.exitCode !== 0) {
+      throw new Error(`Tailwind build failed: ${tailwindResult.stderr.toString()}`);
+    }
     
     console.log(`   ✓ Compiled ${CSS_INPUT} → ${CSS_OUTPUT}\n`);
 
