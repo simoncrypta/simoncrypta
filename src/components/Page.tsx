@@ -10,10 +10,7 @@ interface PageProps {
 export const Page = ({ html, children, className = '' }: PageProps) => {
   if (html) {
     return (
-      <content 
-        className={className}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <content className={className}>{html}</content>
     );
   }
   return (
