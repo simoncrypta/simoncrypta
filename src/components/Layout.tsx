@@ -4,7 +4,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
   description?: string;
   siteUrl?: string;
@@ -49,9 +49,9 @@ export const Layout: React.FC<LayoutProps> = ({
         
         <script dangerouslySetInnerHTML={{ __html: fontLoaderScript }} />
       </head>
-      <body className="max-w-[720px] w-full text-left break-words min-h-screen flex flex-col box-border mx-auto p-5 text-[1.5em] leading-normal noise-bg font-noto-sans antialiased bg-bg-light dark:bg-bg-dark text-text-light dark:text-text-dark">
+      <body>
         <Header currentPath={currentPath} />
-        <main className="flex-1 flex flex-col justify-center">
+        <main>
           {children}
         </main>
         <Footer />

@@ -1,14 +1,23 @@
 import React from 'react';
 
 interface PageProps {
-  children: React.ReactNode;
+  html?: string;
+  children?: React.ReactNode;
   className?: string;
 }
 
-export const Page: React.FC<PageProps> = ({ children, className = '' }) => {
+export const Page: React.FC<PageProps> = ({ html, children, className = '' }) => {
+  if (html) {
+    return (
+      <content 
+        className={className}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    );
+  }
   return (
-    <main className={`flex-grow w-full max-w-3xl mx-auto px-4 ${className}`}>
+    <content className={className}>
       {children}
-    </main>
+    </content>
   );
 };

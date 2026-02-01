@@ -13,21 +13,13 @@ export const Header: React.FC<HeaderProps> = ({ siteTitle = "Simon's Crypta", cu
   ];
 
   return (
-    <header className="flex flex-col items-center justify-center py-8">
-      <a href="/" className="title no-underline hover:no-underline mb-4">
-        <h2 className="text-4xl font-normal m-0" style={{ fontFamily: '"Jersey 25", sans-serif' }}>
-          {siteTitle}
-        </h2>
+    <header>
+      <a href="/" className="title">
+        <h2>{siteTitle}</h2>
       </a>
-      <nav className="flex gap-4">
+      <nav>
         {navItems.map((item) => (
-          <a
-            key={item.path}
-            href={item.path}
-            className={`text-lg hover:text-accent transition-colors ${
-              currentPath === item.path ? 'text-accent font-bold' : 'text-text'
-            }`}
-          >
+          <a key={item.path} href={item.path}>
             {item.name}
           </a>
         ))}
