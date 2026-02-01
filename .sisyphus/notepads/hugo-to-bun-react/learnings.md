@@ -231,3 +231,180 @@ const fullHtml = `<!DOCTYPE html>\n${html}`;
 - Navigation highlights active page
 - Build completes successfully
 
+
+## RSS Feed Generation (Task: Generate RSS Feed)
+
+### Implementation Details
+- Created `src/lib/rss.ts` with `generateRSS(pages: PageInfo[])` function
+- Generates valid RSS 2.0 XML with proper XML escaping for special characters
+- Integrated into build.ts Phase 4 to generate `dist/index.xml` after page generation
+- Collects page metadata during page generation and passes to RSS generator
+
+### Key Patterns
+- RSS 2.0 format: `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>...</channel></rss>`
+- XML escaping function handles: &, <, >, ", '
+- Date format: RFC 2822 via `new Date().toUTCString()`
+- Page data structure: `{ title, path, description, content }`
+
+### Build Integration
+- Phase 4 now generates both HTML pages and RSS feed
+- RSS includes all 3 pages: home (/), now (/now), uses (/uses)
+- Channel metadata: title, link, description, lastBuildDate
+- Each item: title, link, description
+
+### Verification
+- Build completes successfully with RSS generation
+- RSS file valid XML structure with 3 items
+- All required elements present: rss, channel, items with title/link/description
+
+## 404 Page and robots.txt Generation (Task: Create 404 Page and robots.txt)
+
+### 404 Page Component Implementation
+- Created `src/components/NotFound.tsx` as a simple React component
+- Uses Layout wrapper for consistent styling and structure
+- Component includes:
+  - Large "404" heading using Jersey 25 font (text-6xl)
+  - "Page Not Found" subheading (text-3xl)
+  - Descriptive message with opacity-80 for subtle styling
+  - "← Back to home" link with accent color and underline
+- Styled with Tailwind utilities for consistency with rest of site
+
+### Build Integration
+- Added `generate404Page()` function to build.ts
+- Added `generateRobotsTxt()` function to build.ts
+- Both functions called in Phase 4 after page generation
+- 404 page generated to `dist/404.html` with proper DOCTYPE
+- robots.txt generated to `dist/robots.txt` as static text file
+
+### robots.txt Format
+- Simple text file with User-agent, Allow, and Sitemap directives
+- Content:
+  ```
+  User-agent: *
+  Allow: /
+  Sitemap: https://simoncrypta.dev/sitemap.xml
+  ```
+- Generated directly via `Bun.write()` without React rendering
+
+### Key Patterns
+- 404 page uses same Layout component as regular pages for consistency
+- Title: "404 - Page Not Found | Simon's Crypta"
+- currentPath set to "/404" for proper navigation context
+- robots.txt is plain text, not HTML - written directly without React
+
+### Verification
+- Build completes successfully with both files generated
+- 404.html contains proper styling classes (text-6xl, text-3xl)
+- 404.html includes Layout, Header, Footer components
+- robots.txt has correct format and sitemap reference
+- Both files exist in dist/ directory after build
+
+## Cloudflare Pages Deployment Configuration (Task: Configure Cloudflare Pages Deployment)
+
+### Configuration Files Created
+1. **wrangler.toml** - Wrangler CLI configuration for local preview
+   - `name = "simoncrypta"` - Project name
+   - `compatibility_date = "2026-02-01"` - Bun compatibility date
+   - `[site] bucket = "./dist"` - Static site bucket pointing to build output
+
+2. **DEPLOY.md** - Comprehensive deployment documentation
+   - Build command: `bun run build`
+   - Build output directory: `dist/`
+   - Cloudflare Pages dashboard settings
+   - Local preview instructions
+   - Troubleshooting guide
+
+### Cloudflare Pages Setup
+- **Build Command**: `bun run build`
+- **Build Output Directory**: `dist`
+- **Root Directory**: `/` (default)
+- **Framework Preset**: None (static site)
+- **Node.js Version**: 20.x or later (for Bun compatibility)
+
+### Local Preview Testing
+- Command: `bunx wrangler pages dev dist --port 8788`
+- Successfully tested - pages load correctly with all assets
+- Verified HTML, CSS, and navigation work as expected
+
+### Build Verification
+- All required files present in dist/:
+  - `index.html` (home page)
+  - `now/index.html` (now page)
+  - `uses/index.html` (uses page)
+  - `404.html` (error page)
+  - `index.xml` (RSS feed)
+  - `robots.txt` (SEO configuration)
+  - `styles.css` (compiled Tailwind CSS)
+  - `image.png` (static assets)
+
+### Key Patterns for Static Site Deployment
+- Bun's native file operations work well with Cloudflare Pages
+- wrangler.toml minimal configuration sufficient for Pages hosting
+- No environment variables needed for basic deployment
+- Static site generation via React SSR produces valid HTML for Cloudflare Pages
+
+### Deployment Workflow
+1. Push changes to main branch on GitHub
+2. Cloudflare Pages automatically triggers build using `bun run build`
+3. Generated `dist/` directory deployed to `https://simoncrypta.pages.dev`
+4. Custom domain can be added via Cloudflare dashboard
+
+### Documentation Strategy
+- DEPLOY.md serves as single source of truth for deployment
+- Includes both automated and manual deployment options
+- Covers local testing, troubleshooting, and custom domain setup
+- References all relevant configuration files and build outputs
+
+## 2026-02-01 - Migration Complete
+
+### Summary
+Successfully migrated Simon's Crypta from Hugo to Bun + React SSG.
+
+### Final Build Output
+- Build time: 0.18 seconds
+- Output size: 1.5 MB
+- Files generated: 8
+
+### All Tasks Completed
+1. ✅ Initialize Bun project
+2. ✅ Create Tailwind configuration  
+3. ✅ Create build script scaffolding
+4. ✅ Create React components
+5. ✅ Port Hugo CSS to Tailwind
+6. ✅ Implement markdown processing
+7. ✅ Implement static page generation
+8. ✅ Generate RSS feed
+9. ✅ Create 404 page and robots.txt
+10. ✅ Configure Cloudflare Pages
+11. ✅ Visual verification
+
+### Key Technical Decisions
+- Used `marked` instead of `Bun.markdown.html()` (not available in Bun 1.3.5)
+- Used `gray-matter` with TOML engine for front matter parsing
+- Tailwind v4 with PostCSS API for CSS processing
+- React 19 with renderToStaticMarkup for pure static HTML
+- File-based routing (content/*.md → dist/*/index.html)
+
+### Deployment Ready
+- Build command: `bun run build`
+- Output directory: `dist/`
+- Cloudflare Pages compatible
+- Wrangler config included
+
+
+## Deployment Status
+
+**Cloudflare Pages Deployment**: READY
+
+All configuration complete:
+- wrangler.toml configured
+- DEPLOY.md with instructions
+- Build command: `bun run build`
+- Output directory: `dist/`
+
+To deploy:
+1. Push code to GitHub
+2. Connect repo in Cloudflare Pages dashboard
+3. Build settings: `bun run build` → `dist/`
+4. Site will deploy automatically
+

@@ -1,14 +1,11 @@
-/public/
-/resources/_gen/
-/assets/jsconfig.json
-hugo_stats.json
-/public/
-/resources/_gen/
-hugo.exe
-hugo.linux
-hugo.darwin
+# Build output
+dist/
+node_modules/
+
+# Local state and cache
+.wrangler/
+.sisyphus/
+
+# Temporary files
+tmp/
 .DS_Store
-node_modules
-dist
-tmp
-.hugo_build.lock

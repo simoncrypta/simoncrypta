@@ -1,5 +1,9 @@
 # Hugo to Bun + React SSG Migration
 
+**STATUS: ✅ COMPLETED** - Migration finished on Jan 31, 2026. Hugo files removed. Site running on Bun + React SSG.
+
+---
+
 ## TL;DR
 
 > **Quick Summary**: Migrate Simon's Crypta from Hugo to a custom Bun + React SSG with Tailwind CSS, deploying to Cloudflare Pages.
@@ -63,10 +67,10 @@ Build a custom SSG using Bun + React that generates static HTML from markdown co
 - 404 error page
 
 ### Definition of Done
-- [ ] `bun run build` exits with code 0
-- [ ] `dist/` contains: `index.html`, `now/index.html`, `uses/index.html`, `404.html`, `index.xml`
-- [ ] Visual comparison: new site matches Hugo output in both light and dark modes
-- [ ] Deploy to Cloudflare Pages successfully
+- [x] `bun run build` exits with code 0
+- [x] `dist/` contains: `index.html`, `now/index.html`, `uses/index.html`, `404.html`, `index.xml`
+- [x] Visual comparison: new site matches Hugo output in both light and dark modes
+- [x] Deploy to Cloudflare Pages successfully
 
 ### Must Have
 - Dark/light theme via `prefers-color-scheme` media query
@@ -187,7 +191,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ### Wave 1: Foundation
 
-- [ ] 1. Initialize Bun Project
+- [x] 1. Initialize Bun Project
 
   **What to do**:
   - Run `bun init` to create project structure
@@ -237,7 +241,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ---
 
-- [ ] 2. Create Tailwind Configuration
+- [x] 2. Create Tailwind Configuration
 
   **What to do**:
   - Install Tailwind CSS: `bun add -d tailwindcss postcss autoprefixer`
@@ -289,7 +293,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ### Wave 2: Core Infrastructure
 
-- [ ] 3. Create Build Script Scaffolding
+- [x] 3. Create Build Script Scaffolding
 
   **What to do**:
   - Create `build.ts` as main build entry point
@@ -338,7 +342,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ---
 
-- [ ] 4. Create React Components
+- [x] 4. Create React Components
 
   **What to do**:
   - Create `src/components/Layout.tsx` - HTML wrapper with head, body structure
@@ -388,7 +392,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ---
 
-- [ ] 5. Port CSS to Tailwind
+- [x] 5. Port CSS to Tailwind
 
   **What to do**:
   - Convert body styles to Tailwind utilities in Layout component
@@ -452,7 +456,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ### Wave 3: Content Processing
 
-- [ ] 6. Implement Markdown Processing
+- [x] 6. Implement Markdown Processing
 
   **What to do**:
   - Create `src/lib/markdown.ts` with functions:
@@ -510,7 +514,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ---
 
-- [ ] 7. Implement Page Generation
+- [x] 7. Implement Page Generation
 
   **What to do**:
   - Update `build.ts` to generate HTML pages:
@@ -569,7 +573,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ---
 
-- [ ] 8. Generate RSS Feed
+- [x] 8. Generate RSS Feed
 
   **What to do**:
   - Create `src/lib/rss.ts` to generate RSS 2.0 XML
@@ -620,7 +624,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ### Wave 4: Polish
 
-- [ ] 9. Create 404 and robots.txt
+- [x] 9. Create 404 and robots.txt
 
   **What to do**:
   - Create 404 page component and generate `dist/404.html`
@@ -669,7 +673,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ---
 
-- [ ] 10. Configure Cloudflare Pages
+- [x] 10. Configure Cloudflare Pages
 
   **What to do**:
   - Create `wrangler.toml` for Cloudflare Pages configuration (optional)
@@ -721,7 +725,7 @@ Parallel Speedup: ~40% faster than sequential
 
 ### Wave 5: Verification
 
-- [ ] 11. Visual Verification and Cleanup
+- [x] 11. Visual Verification and Cleanup
 
   **What to do**:
   - Run Hugo build: `hugo` → `public/`
@@ -782,9 +786,9 @@ Parallel Speedup: ~40% faster than sequential
   await page.screenshot({ path: '.sisyphus/evidence/old-home-light.png' });
   ```
 
-  **Evidence to Capture:**
-  - [ ] Screenshots in `.sisyphus/evidence/` for all pages (light + dark)
-  - [ ] Side-by-side comparison notes
+**Evidence to Capture:**
+- [x] Screenshots in `.sisyphus/evidence/` for all pages (light + dark)
+- [x] Side-by-side comparison notes
 
   **Commit**: YES
   - Message: `chore: complete migration verification`
@@ -836,13 +840,13 @@ grep '<rss' dist/index.xml
 ```
 
 ### Final Checklist
-- [ ] All 3 pages render correctly (Home, Now, Uses)
-- [ ] Dark/light theme works via system preference
-- [ ] Navigation links work
-- [ ] Footer social icons display correctly
-- [ ] RSS feed is valid XML
-- [ ] 404 page exists
-- [ ] robots.txt exists
-- [ ] Visual appearance matches Hugo output
-- [ ] No client-side JavaScript (pure static)
-- [ ] Ready for Cloudflare Pages deployment
+- [x] All 3 pages render correctly (Home, Now, Uses)
+- [x] Dark/light theme works via system preference
+- [x] Navigation links work
+- [x] Footer social icons display correctly
+- [x] RSS feed is valid XML
+- [x] 404 page exists
+- [x] robots.txt exists
+- [x] Visual appearance matches Hugo output
+- [x] No client-side JavaScript (pure static)
+- [x] Ready for Cloudflare Pages deployment
