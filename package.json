@@ -8,6 +8,7 @@
     "dev": "bun --watch run build.ts"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/bun": "latest",
     "@types/react": "^19.2.10",

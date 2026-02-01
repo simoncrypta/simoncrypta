@@ -49,9 +49,11 @@ export const Layout: React.FC<LayoutProps> = ({
         
         <script dangerouslySetInnerHTML={{ __html: fontLoaderScript }} />
       </head>
-      <body className="bg-background text-text min-h-screen flex flex-col font-sans">
+      <body className="max-w-[720px] w-full text-left break-words min-h-screen flex flex-col box-border mx-auto p-5 text-[1.5em] leading-normal noise-bg font-noto-sans antialiased bg-bg-light dark:bg-bg-dark text-text-light dark:text-text-dark">
         <Header currentPath={currentPath} />
-        {children}
+        <main className="flex-1 flex flex-col justify-center">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

@@ -119,3 +119,15 @@ Tailwind config includes:
 
 ### Dependencies Added
 - `@tailwindcss/postcss@4.1.18` - Required for Tailwind v4 PostCSS integration
+
+## Hugo to Tailwind Port (Task 7)
+
+### Tailwind v4 CLI
+- Discovered that `@tailwindcss/cli` package DOES exist and provides the `tailwindcss` binary for CLI usage.
+- Installed `@tailwindcss/cli` to enable `bunx tailwindcss` commands.
+- This allows using the CLI build method alongside the PostCSS API method if needed.
+
+### CSS Porting Strategy
+- **Hybrid Approach**: Maintained CSS variables in `global.css` (matching Hugo source) for broad compatibility, but used Tailwind utility classes (`bg-bg-light dark:bg-bg-dark`) in `Layout.tsx` to leverage Tailwind's dark mode features explicitly.
+- **Noise Texture**: Preserved the complex SVG data URI in a custom `.noise-bg` utility class in `global.css` as it's too complex for inline Tailwind arbitrary values.
+- **Fonts**: Kept existing Google Fonts in `Layout.tsx` but also added `@font-face` definitions in `global.css` for completeness/fallback matching the Hugo source.
