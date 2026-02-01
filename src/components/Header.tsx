@@ -1,11 +1,10 @@
 import React from 'react';
 
 interface HeaderProps {
-  siteTitle?: string;
   currentPath: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ siteTitle = "Simon's Crypta", currentPath }) => {
+export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Now', path: '/now' },
@@ -15,8 +14,8 @@ export const Header: React.FC<HeaderProps> = ({ siteTitle = "Simon's Crypta", cu
   return (
     <header>
       <a href="/" className="title">
-        <h2>{siteTitle}</h2>
-      </a>
+         <h2>Simon's Crypta</h2>
+       </a>
       <nav>
         {navItems.map((item) => (
           <a key={item.path} href={item.path}>
