@@ -10,18 +10,83 @@
  * 4. Generate pages (placeholder - implemented in Task 7)
  */
 
-import { rmSync, mkdirSync, cpSync, existsSync } from "fs";
+import { rmSync, mkdirSync, cpSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import postcss from "postcss";
 // @ts-expect-error - Tailwind PostCSS plugin types
 import tailwindcss from "@tailwindcss/postcss";
 // @ts-expect-error - Autoprefixer types
 import autoprefixer from "autoprefixer";
+import { renderToStaticMarkup } from "react-dom/server";
+import React from "react";
+import { Layout } from "./src/components/Layout";
+import { Page } from "./src/components/Page";
+import { parseMarkdown } from "./src/lib/markdown";
+import { generateRSS } from "./src/lib/rss";
 
 const DIST_DIR = "dist";
 const STATIC_DIR = "static";
+const CONTENT_DIR = "content";
 const CSS_INPUT = "src/styles/global.css";
 const CSS_OUTPUT = "dist/styles.css";
+
+const SITE_TITLE = "Simon's Crypta";
+const SITE_DESCRIPTION = "Professional vibe coder sharing contexts and knowledge for every dimension";
+const SITE_URL = "https://simoncrypta.dev";
+
+async function generatePages() {
+  const contentFiles = readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
+  const pageInfos = [];
+  
+  for (const file of contentFiles) {
+    const filePath = join(CONTENT_DIR, file);
+    const parsed = await parseMarkdown(filePath);
+    
+    const isIndexFile = file === '_index.md';
+    const outputPath = isIndexFile 
+      ? join(DIST_DIR, 'index.html')
+      : join(DIST_DIR, file.replace('.md', ''), 'index.html');
+    
+    const urlPath = isIndexFile 
+      ? '/' 
+      : `/${file.replace('.md', '')}`;
+    
+    if (!isIndexFile) {
+      mkdirSync(join(DIST_DIR, file.replace('.md', '')), { recursive: true });
+    }
+    
+    const html = renderToStaticMarkup(
+      React.createElement(Layout, {
+        title: parsed.frontmatter.title || SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        siteUrl: SITE_URL,
+        currentPath: urlPath
+      },
+        React.createElement(Page, {},
+          React.createElement('div', { 
+            dangerouslySetInnerHTML: { __html: parsed.html } 
+          })
+        )
+      )
+    );
+    
+    const fullHtml = `<!DOCTYPE html>\n${html}`;
+    await Bun.write(outputPath, fullHtml);
+    
+    console.log(`   ✓ Generated ${file} → ${outputPath.replace(DIST_DIR + '/', '')}`);
+    
+    pageInfos.push({
+      title: parsed.frontmatter.title || SITE_TITLE,
+      path: urlPath,
+      description: SITE_DESCRIPTION,
+      content: parsed.content
+    });
+  }
+  
+  const rssXml = generateRSS(pageInfos);
+  await Bun.write(join(DIST_DIR, 'index.xml'), rssXml);
+  console.log(`   ✓ Generated RSS feed → dist/index.xml`);
+}
 
 async function main() {
   try {
@@ -63,9 +128,10 @@ async function main() {
     
     console.log(`   ✓ Compiled ${CSS_INPUT} → ${CSS_OUTPUT}\n`);
 
-    // Phase 4: Generate pages (placeholder)
-    console.log("📄 Phase 4: Generate pages...");
-    console.log("   ⏭️  Placeholder - will be implemented in Task 7\n");
+    // Phase 4: Generate pages
+    console.log("📄 Phase 4: Generating pages...");
+    await generatePages();
+    console.log("   ✓ Generated all pages\n");
 
     // Build complete
     console.log("✅ Build complete!\n");
