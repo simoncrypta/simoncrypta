@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: #f2f2f2;
+    --text-color: #1b1d36;
+    --link-color: #0066cc;
+    --code-bg: #1b1d36;
+    --code-text: #f2f2f2;
+    --blockquote-color: #d72638;
+    --visited-link: #551a8b;
+    --input-bg: #fff;
+    --input-text: #1b1d36;
+    --accent-color: #ffd400;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #1b1d36;
+      --text-color: #f2f2f2;
+      --link-color: #ffd400;
+      --code-bg: #d72638;
+      --code-text: #f2f2f2;
+      --blockquote-color: #ffd400;
+      --visited-link: #d72638;
+      --input-bg: #1e96fc;
+      --input-text: #f2f2f2;
+      --accent-color: #ffd400;
+    }
+  }
+
+  body {
+    @apply bg-[#f2f2f2] text-[#1b1d36];
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-[#1b1d36] text-[#f2f2f2];
+    }
+  }
+
+  a {
+    @apply text-[#0066cc];
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a {
+      @apply text-[#ffd400];
+    }
+  }
+
+  code {
+    @apply bg-[#1b1d36] text-[#f2f2f2];
+  }
+
+  @media (prefers-color-scheme: dark) {
+    code {
+      @apply bg-[#d72638] text-[#f2f2f2];
+    }
+  }
+
+  blockquote {
+    @apply text-[#d72638];
+  }
+
+  @media (prefers-color-scheme: dark) {
+    blockquote {
+      @apply text-[#ffd400];
+    }
+  }
+
+  input,
+  textarea {
+    @apply bg-white text-[#1b1d36];
+  }
+
+  @media (prefers-color-scheme: dark) {
+    input,
+    textarea {
+      @apply bg-[#1e96fc] text-[#f2f2f2];
+    }
+  }
+}
