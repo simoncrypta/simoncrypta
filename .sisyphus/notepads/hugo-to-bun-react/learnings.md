@@ -131,3 +131,103 @@ Tailwind config includes:
 - **Hybrid Approach**: Maintained CSS variables in `global.css` (matching Hugo source) for broad compatibility, but used Tailwind utility classes (`bg-bg-light dark:bg-bg-dark`) in `Layout.tsx` to leverage Tailwind's dark mode features explicitly.
 - **Noise Texture**: Preserved the complex SVG data URI in a custom `.noise-bg` utility class in `global.css` as it's too complex for inline Tailwind arbitrary values.
 - **Fonts**: Kept existing Google Fonts in `Layout.tsx` but also added `@font-face` definitions in `global.css` for completeness/fallback matching the Hugo source.
+
+## Markdown Processing Implementation (Task 8)
+
+### Bun.markdown API Limitation
+- **Discovery**: `Bun.markdown.html()` API does NOT exist in Bun v1.3.5
+- Bun's markdown support is limited to specific contexts, not a general-purpose API
+- Had to pivot to using `marked` package instead
+
+### Dependencies Added
+- `toml@3.0.0` - TOML parser for gray-matter engine
+- `marked@17.0.1` - Markdown to HTML converter (GitHub Flavored Markdown support)
+- `typescript-language-server@5.1.3` - For LSP diagnostics
+- `typescript@5.9.3` - TypeScript compiler for type checking
+
+### gray-matter Configuration
+- Used `gray-matter` with custom TOML engine: `engines: { toml: toml.parse.bind(toml) }`
+- Delimiter: `+++` (Hugo TOML front matter standard)
+- Language: `toml` (explicit language specification)
+
+### Special Case Handling
+- `_index.md` has NO front matter - detected via `filePath.endsWith('_index.md')`
+- Default frontmatter for index: `{ title: "Simon's Crypta" }`
+- All other files parsed with gray-matter
+
+### marked Configuration
+- Enabled GitHub Flavored Markdown: `gfm: true`
+- Disabled breaks: `breaks: false` (matches Hugo behavior)
+- Used `marked.parse()` for async HTML generation
+
+### TypeScript Import Issues
+- Initial imports failed with `esModuleInterop` errors
+- Solution: Changed to namespace imports:
+  - `import * as matter from 'gray-matter'`
+  - `import * as toml from 'toml'`
+- This works with `moduleResolution: "bundler"` in tsconfig.json
+
+### Testing Approach
+- Created temporary test file to verify parsing
+- Tested all three content files: `now.md`, `uses.md`, `_index.md`
+- Verified frontmatter extraction and HTML generation
+- Removed test file after successful validation
+
+### Function Signature
+```typescript
+export async function parseMarkdown(filePath: string): Promise<ParsedMarkdown>
+```
+
+Returns:
+- `frontmatter: FrontMatter` - Parsed TOML data or defaults
+- `content: string` - Raw markdown content (without front matter)
+- `html: string` - Rendered HTML from markdown
+
+## Static Page Generation (Task 7)
+
+Successfully implemented static page generation in build.ts with React SSR:
+
+### Key Implementation Details
+
+1. **React SSR**: Used `renderToStaticMarkup` from `react-dom/server` to convert React components to static HTML
+   - Imported Layout and Page components
+   - Created React elements imperatively with `React.createElement()`
+   - Wrapped markdown HTML in dangerouslySetInnerHTML div
+
+2. **URL Mapping**:
+   - `_index.md` → `dist/index.html` (path: "/")
+   - `{name}.md` → `dist/{name}/index.html` (path: "/{name}")
+   - Created subdirectories with `mkdirSync` and `recursive: true`
+
+3. **Page Structure**:
+   - Layout receives: title, description, siteUrl, currentPath
+   - Page wraps the markdown content
+   - CSS linked via `/styles.css` in Layout component
+   - Full HTML includes DOCTYPE prepended to React output
+
+4. **Content Processing**:
+   - Used `readdirSync` to scan content directory
+   - `parseMarkdown()` returns frontmatter, content, and html
+   - Title from frontmatter used in page title
+   - Navigation highlights current page based on currentPath
+
+### Code Pattern for SSR
+```typescript
+const html = renderToStaticMarkup(
+  React.createElement(Layout, { props },
+    React.createElement(Page, {},
+      React.createElement('div', { 
+        dangerouslySetInnerHTML: { __html: parsed.html } 
+      })
+    )
+  )
+);
+const fullHtml = `<!DOCTYPE html>\n${html}`;
+```
+
+### Verification
+- All 3 pages generate correctly (index, now, uses)
+- Pages contain proper titles, meta tags, CSS links
+- Navigation highlights active page
+- Build completes successfully
+
