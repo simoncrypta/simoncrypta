@@ -88,3 +88,34 @@ Tailwind config includes:
 - Tailwind content paths include Hugo layouts, content, and src directories
 - Global CSS preserves all Hugo color variables for compatibility
 - @layer base ensures CSS variables work alongside Tailwind utilities
+- Created React components mirroring Hugo templates structure.
+- Used 'dangerouslySetInnerHTML' for the font loading script in Layout.tsx to preserve inline script behavior.
+- Adapted SVG icons from Hugo partials to React components, converting attributes to camelCase.
+- Implemented 'SEO' component to handle meta tags dynamically based on props.
+- Used 'Layout' as the root HTML wrapper, including 'html', 'head', and 'body' tags, suitable for SSG.
+
+## Build Script Implementation (Task 6)
+
+### Tailwind CSS v4 Changes
+- **Breaking change**: Tailwind v4 no longer has a standalone CLI
+- Must use `@tailwindcss/postcss` package as PostCSS plugin
+- Syntax changed from `@tailwind base/components/utilities` to `@import "tailwindcss"`
+- PostCSS API approach works well with Bun's native file operations
+
+### Build Script Architecture
+- Used Bun's native APIs: `Bun.file()`, `Bun.write()` for file operations
+- PostCSS processing via API instead of CLI for better integration
+- Four-phase structure: Clean → Copy Static → Build CSS → Generate Pages (placeholder)
+- Error handling with try/catch and process.exit(1)
+
+### Type Safety
+- Added `@ts-expect-error` for PostCSS plugins lacking proper type exports
+- TypeScript checks pass with `bunx tsc --noEmit`
+
+### File Operations
+- `rmSync()` with `recursive: true` for clean dist removal
+- `cpSync()` with `recursive: true` for static asset copying
+- `existsSync()` checks before operations to handle missing directories gracefully
+
+### Dependencies Added
+- `@tailwindcss/postcss@4.1.18` - Required for Tailwind v4 PostCSS integration

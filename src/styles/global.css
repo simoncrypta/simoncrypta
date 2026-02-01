@@ -1,8 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
+  @font-face {
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Noto Sans');
+  }
+  @font-face {
+    font-family: 'Jersey 25';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Jersey 25');
+  }
+
   :root {
     --bg-color: #f2f2f2;
     --text-color: #1b1d36;
@@ -32,54 +45,78 @@
   }
 
   body {
-    @apply bg-[#f2f2f2] text-[#1b1d36];
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    @apply bg-[var(--bg-color)] text-[var(--text-color)] antialiased;
   }
 
-  @media (prefers-color-scheme: dark) {
-    body {
-      @apply bg-[#1b1d36] text-[#f2f2f2];
-    }
+  h1, h2, h3, h4, h5, h6, strong, b {
+    @apply text-[var(--text-color)];
+  }
+
+  h1 {
+    @apply mb-0;
+  }
+
+  h2 {
+    @apply text-xl mb-[1.5em] mt-0;
   }
 
   a {
-    @apply text-[#0066cc];
+    @apply text-[var(--link-color)];
   }
 
-  @media (prefers-color-scheme: dark) {
-    a {
-      @apply text-[#ffd400];
-    }
+  em {
+    font-size: 0.9em;
   }
 
   code {
-    @apply bg-[#1b1d36] text-[#f2f2f2];
+    @apply bg-[var(--code-bg)] text-[var(--code-text)] px-[5px] py-[2px];
   }
 
-  @media (prefers-color-scheme: dark) {
-    code {
-      @apply bg-[#d72638] text-[#f2f2f2];
-    }
+  pre code {
+    @apply text-[var(--text-color)] block p-5 whitespace-pre-wrap text-[1.5em] overflow-x-auto;
   }
 
   blockquote {
-    @apply text-[#d72638];
+    @apply border-l border-[#999] text-[var(--blockquote-color)] pl-5 italic;
   }
 
-  @media (prefers-color-scheme: dark) {
-    blockquote {
-      @apply text-[#ffd400];
-    }
+  input, textarea {
+    @apply w-full text-[1.5em] bg-[var(--input-bg)] text-[var(--input-text)];
+  }
+  
+  /* Custom classes from Hugo */
+  .title {
+    font-family: "Jersey 25", sans-serif;
+    @apply text-[xx-large] font-normal no-underline border-0 text-[var(--accent-color)];
   }
 
-  input,
-  textarea {
-    @apply bg-white text-[#1b1d36];
+  .title span {
+    @apply font-normal;
   }
 
-  @media (prefers-color-scheme: dark) {
-    input,
-    textarea {
-      @apply bg-[#1e96fc] text-[#f2f2f2];
-    }
+  .helptext {
+    @apply text-[#aaa] text-[1.5em];
+  }
+
+  .errorlist {
+    @apply text-[#d72638] text-[1.5em];
+  }
+
+  .tags {
+    @apply text-[0.8em];
+  }
+
+  .tags a {
+    @apply text-[var(--link-color)];
+  }
+}
+
+@layer utilities {
+  .noise-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8' numOctaves='5' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='discrete' tableValues='0 .012 .02'/%3E%3CfeFuncG type='discrete' tableValues='0 .012 .02'/%3E%3CfeFuncB type='discrete' tableValues='0 .012 .02'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
   }
 }
