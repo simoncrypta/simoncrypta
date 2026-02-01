@@ -9,14 +9,21 @@ export function Header({ currentPath }: HeaderProps) {
     { name: 'Uses', path: '/uses' }
   ];
 
+  const isActive = (path: string): boolean => 
+    path === '/' ? currentPath === '/' : currentPath.startsWith(path);
+
   return (
     <header>
-      <a href="/" className="title">
-         <h2>Simon's Crypta</h2>
-       </a>
+      <a href="/" className="title block">
+        <h2 className="mt-2.5 mb-0 text-4xl">Simon's Crypta</h2>
+      </a>
       <nav>
         {navItems.map((item) => (
-          <a key={item.path} href={item.path}>
+          <a 
+            key={item.path} 
+            href={item.path}
+            className={`mr-2.5 text-xl text-[var(--color-link)] underline ${isActive(item.path) ? 'font-bold' : ''}`}
+          >
             {item.name}
           </a>
         ))}

@@ -7,15 +7,8 @@ interface PageProps {
   className?: string;
 }
 
-export const Page = ({ html, children, className = '' }: PageProps) => {
-  if (html) {
-    return (
-      <content className={className}>{html}</content>
-    );
-  }
-  return (
-    <content className={className}>
-      {children}
-    </content>
-  );
-};
+export const Page = ({ html, children, className = '' }: PageProps) => (
+  <article className={`prose prose-lg prose-invert prose-crypta max-w-none leading-relaxed text-[var(--color-text)] prose-h1:mt-0 prose-h2:mt-0 prose-p:my-1 prose-ul:my-1 prose-ol:my-1 ${className}`}>
+    {html || children}
+  </article>
+);

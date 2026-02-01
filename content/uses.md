@@ -1,8 +1,3 @@
-+++
-title = "Uses"
-menu = "main"
-+++
-
 # A glimpse into my office
 *Updated on December 28, 2025*
 

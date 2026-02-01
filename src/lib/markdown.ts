@@ -1,56 +1,29 @@
-import matter from 'gray-matter';
-import * as toml from 'toml';
-
-export interface FrontMatter {
-  title: string;
-  menu?: string;
-  [key: string]: any;
-}
+import { basename } from "path";
 
 export interface ParsedMarkdown {
-  frontmatter: FrontMatter;
+  title: string;
   content: string;
   html: string;
 }
 
+function titleFromFilename(filePath: string): string {
+  const filename = basename(filePath, '.md');
+  if (filename === 'index') return "Simon's Crypta";
+  return filename.charAt(0).toUpperCase() + filename.slice(1);
+}
+
 export async function parseMarkdown(filePath: string): Promise<ParsedMarkdown> {
-  try {
-    const file = Bun.file(filePath);
-    const fileContent = await file.text();
+  const file = Bun.file(filePath);
+  const content = await file.text();
+  
+  const html = Bun.markdown.html(content, {
+    gfm: true,
+    breaks: false,
+  });
 
-    const isIndexFile = filePath.endsWith('_index.md');
-
-    let frontmatter: FrontMatter;
-    let content: string;
-
-    if (isIndexFile) {
-      frontmatter = { title: "Simon's Crypta" };
-      content = fileContent;
-    } else {
-      const parsed = matter(fileContent, {
-        engines: {
-          toml: toml.parse.bind(toml)
-        },
-        delimiters: '+++',
-        language: 'toml'
-      });
-
-      frontmatter = parsed.data as FrontMatter;
-      content = parsed.content;
-    }
-
-    // Use Bun's native markdown parser (CommonMark + GFM)
-    const html = Bun.markdown.html(content, {
-      gfm: true,           // GitHub Flavored Markdown
-      breaks: false,       // Don't convert \n to <br>
-    });
-
-    return {
-      frontmatter,
-      content,
-      html
-    };
-  } catch (error) {
-    throw new Error(`Failed to parse markdown file ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
-  }
+  return {
+    title: titleFromFilename(filePath),
+    content,
+    html
+  };
 }

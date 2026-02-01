@@ -16,7 +16,7 @@ import { Layout } from "./src/components/Layout";
 import { Page } from "./src/components/Page";
 import { NotFound } from "./src/components/NotFound";
 import { parseMarkdown } from "./src/lib/markdown";
-import { generateRSS } from "./src/lib/rss";
+
 
 const DIST_DIR = "dist";
 const STATIC_DIR = "static";
@@ -30,52 +30,38 @@ const SITE_URL = "https://simoncrypta.dev";
 
 async function generatePages() {
   const contentFiles = readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
-  const pageInfos = [];
   
   for (const file of contentFiles) {
     const filePath = join(CONTENT_DIR, file);
     const parsed = await parseMarkdown(filePath);
     
-    const isIndexFile = file === '_index.md';
+    const isIndexFile = file === 'index.md';
+    const slug = file.replace('.md', '');
     const outputPath = isIndexFile 
       ? join(DIST_DIR, 'index.html')
-      : join(DIST_DIR, file.replace('.md', ''), 'index.html');
+      : join(DIST_DIR, slug, 'index.html');
     
-    const urlPath = isIndexFile 
-      ? '/' 
-      : `/${file.replace('.md', '')}`;
+    const urlPath = isIndexFile ? '/' : `/${slug}`;
     
     if (!isIndexFile) {
-      mkdirSync(join(DIST_DIR, file.replace('.md', '')), { recursive: true });
+      mkdirSync(join(DIST_DIR, slug), { recursive: true });
     }
     
-     const html = (
-       <Layout
-         title={parsed.frontmatter.title || SITE_TITLE}
-         description={SITE_DESCRIPTION}
-         siteUrl={SITE_URL}
-         currentPath={urlPath}
-       >
-         <Page html={parsed.html} />
-       </Layout>
-     ) as string;
+    const html = (
+      <Layout
+        title={parsed.title}
+        description={SITE_DESCRIPTION}
+        currentPath={urlPath}
+      >
+        <Page html={parsed.html} />
+      </Layout>
+    ) as string;
     
     const fullHtml = `<!DOCTYPE html>\n${html}`;
     await Bun.write(outputPath, fullHtml);
     
     console.log(`   ✓ Generated ${file} → ${outputPath.replace(DIST_DIR + '/', '')}`);
-    
-    pageInfos.push({
-      title: parsed.frontmatter.title || SITE_TITLE,
-      path: urlPath,
-      description: SITE_DESCRIPTION,
-      content: parsed.content
-    });
   }
-  
-   const rssXml = generateRSS(pageInfos);
-   await Bun.write(join(DIST_DIR, 'index.xml'), rssXml);
-   console.log(`   ✓ Generated RSS feed → dist/index.xml`);
 }
 
 async function generate404Page() {
@@ -83,7 +69,6 @@ async function generate404Page() {
      <Layout
        title="404 - Page Not Found | Simon's Crypta"
        description="Page not found"
-       siteUrl={SITE_URL}
        currentPath="/404"
      >
        <NotFound />

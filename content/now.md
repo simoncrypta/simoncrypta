@@ -1,7 +1,3 @@
-+++
-title = "Now"
-menu = "main"
-+++
 # What I'm doing now
 *Updated on December 28, 2025*
 

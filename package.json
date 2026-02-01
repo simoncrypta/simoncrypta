@@ -3,10 +3,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun run build.tsx",
-    "dev": "bun --watch run build.tsx",
-    "serve": "bun run serve.ts",
-    "preview": "bun run build && bun run serve"
+    "build": "bun build.tsx",
+    "dev": "bun --watch build.tsx & bun serve.ts",
+    "serve": "bun serve.ts",
+    "preview": "bun build.tsx && bun serve.ts"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@kitajs/html": "^4.2.8",
-    "gray-matter": "^4.0.3",
-    "toml": "^3.0.0"
+    "@tailwindcss/typography": "^0.5.19"
   }
 }

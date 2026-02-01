@@ -8,7 +8,6 @@ interface LayoutProps {
   children?: Children;
   title?: string;
   description?: string;
-  siteUrl?: string;
   currentPath?: string;
   image?: string;
   isArticle?: boolean;
@@ -18,7 +17,6 @@ export function Layout({
   children,
   title,
   description,
-  siteUrl = "https://simoncrypta.dev",
   currentPath = "/",
   image,
   isArticle = false
@@ -50,9 +48,9 @@ export function Layout({
         
         <script>{fontLoaderScript}</script>
       </head>
-      <body>
+      <body className="font-sans font-medium m-0 p-5 max-w-3xl w-full text-left bg-[var(--color-bg)] noise-bg break-words leading-relaxed text-[var(--color-text)] min-h-screen flex flex-col box-border mx-auto text-xl overflow-hidden">
         <Header currentPath={currentPath} />
-        <main>
+        <main className="flex-1 grid place-items-center">
           {children}
         </main>
         <Footer />
