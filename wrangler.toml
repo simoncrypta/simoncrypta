@@ -1,0 +1,5 @@
+name = "simoncrypta"
+compatibility_date = "2026-02-01"
+
+[site]
+bucket = "./dist"
