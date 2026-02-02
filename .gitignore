@@ -5,6 +5,7 @@ node_modules/
 # Local state and cache
 .wrangler/
 .sisyphus/
+.playwright-cli/
 
 # Temporary files
 tmp/
