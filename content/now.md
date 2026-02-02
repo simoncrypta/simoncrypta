@@ -1,34 +1,34 @@
 # What I'm doing now
-*Updated on December 28, 2025*
+*Updated on February 1, 2026*
 
 ## Work
 ### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
 #### Current projects
 - Full-stack TS development with [RedwoodJS](https://redwoodjs.com/)
-- Setup infrastructure on [Render.com](https://render.com)
-- Make people happy with our PayFac services
-- Develop new React Native mobile app for car loan customers  
+- Building a consumer report experience to help dealerships make loan decisions
+- Improving our tool and design to continue shipping fast 
 
 ## Sport
 - Cross-discipline fitness / functional fitness at [Squad-Gym Tetreaultville](https://www.facebook.com/squadgymtetreaultville/)
 - Cycling with [Moose Porter Fixie](https://moosebicycle.com/collections/fixies/products/porter)
-- Freestyle downhill ski when it snows ⛷️❄️
+- Freestyle downhill skiing when it snows ⛷️❄️
 
 ## Reading
 - The Product Book by Product School
-- Show Your Work by Austin Kleon 
+- The Lean Startup by Eric Ries (revisiting after 8 years)
+- The Autobiography of Benjamin Franklin
 
 ## Music
 ### Recently Added
 - USB by Fred again..
 - Deadbeat by Tame Impala
-- DONT TAP THE GLASS by Tyler, The Creator 
+- DON’T TAP THE GLASS by Tyler, The Creator 
 
 ## Game
 - Fortnite
-- Heartstone Battleground
+- Hearthstone Battlegrounds
 
 ---
 
-Visit [nownownow.com](https://nownownow.com/) for more /now page  
+Visit [nownownow.com](https://nownownow.com/) for more /now pages  
 [Or add your own now page](https://nownownow.com/about)

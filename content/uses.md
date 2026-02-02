@@ -1,28 +1,29 @@
 # A glimpse into my office
-*Updated on December 28, 2025*
+*Updated on February 1, 2026*
 
-## On my Desk
+## On My Desk
 
-- Computer-1 AMD custom build running Omarchy
+- Computer 1: AMD custom build running Omarchy
 - Inkbird CO2 Monitor
 - Samsung Odyssey Neo G9 monitor
 - Xiaomi Mi Monitor Light Bar
 - ONO Roller and Scroller fidget toys
-- ZSA Voyager Keyboard 
+- ZSA Voyager keyboard 
 - Razer DeathAdder v2 Mouse
-- Yamaha HS4 Speaker System
-- Jlab Talk Pro Mic
-- Ikea UPPSPEL Desk
+- Yamaha HS4 speaker system
+- JLab Talk Pro mic
+- OBSBOT Meet 2 camera
+- IKEA UPPSPEL desk
 - Branch Ergonomic Chair
 
 ## On My Linux
 
-- Brave Browser
+- Zen Browser
 - Cursor
 - Linear
 - Figma
-- Slask
-- Ghostty
+- Slack
+- Warp Terminal
 
 ## On My iPhone
 
@@ -30,8 +31,7 @@
 - BoldVoice
 - MyMind
 - Perplexity
-- Spotify
-- Slack
+- YouTube Music
 
 ## Bonus: My coffee setup
 
@@ -43,5 +43,5 @@
 
 ---
 
-Visit [uses.tech](https://uses.tech) for more /uses page  
+Visit [uses.tech](https://uses.tech) for more /uses pages  
 [Or add your own uses page](https://github.com/wesbos/awesome-uses/?tab=readme-ov-file#readme)
