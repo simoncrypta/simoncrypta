@@ -16,6 +16,7 @@ import { Layout } from "./src/components/Layout";
 import { Page } from "./src/components/Page";
 import { NotFound } from "./src/components/NotFound";
 import { parseMarkdown } from "./src/lib/markdown";
+import { SITE_CONFIG } from "./src/config";
 
 
 const DIST_DIR = "dist";
@@ -23,10 +24,6 @@ const STATIC_DIR = "static";
 const CONTENT_DIR = "content";
 const CSS_INPUT = "src/styles/global.css";
 const CSS_OUTPUT = "dist/styles.css";
-
-const SITE_TITLE = "Simon's Crypta";
-const SITE_DESCRIPTION = "Professional vibe coder sharing contexts and knowledge for every dimension";
-const SITE_URL = "https://simoncrypta.dev";
 
 async function generatePages() {
   const contentFiles = readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
@@ -41,7 +38,7 @@ async function generatePages() {
       ? join(DIST_DIR, 'index.html')
       : join(DIST_DIR, slug, 'index.html');
     
-    const urlPath = isIndexFile ? '/' : `/${slug}`;
+    const urlPath = isIndexFile ? '/' : `/${slug}/`;
     
     if (!isIndexFile) {
       mkdirSync(join(DIST_DIR, slug), { recursive: true });
@@ -50,8 +47,8 @@ async function generatePages() {
     const html = (
       <Layout
         title={parsed.title}
-        description={SITE_DESCRIPTION}
         currentPath={urlPath}
+        isArticle={!isIndexFile}
       >
         <Page html={parsed.html} />
       </Layout>
@@ -67,7 +64,7 @@ async function generatePages() {
 async function generate404Page() {
    const html = (
      <Layout
-       title="404 - Page Not Found | Simon's Crypta"
+       title="404 - Page Not Found"
        description="Page not found"
        currentPath="/404"
      >
@@ -83,7 +80,7 @@ async function generate404Page() {
 async function generateRobotsTxt() {
   const robotsTxt = `User-agent: *
 Allow: /
-Sitemap: https://simoncrypta.dev/sitemap.xml
+Sitemap: ${SITE_CONFIG.url}/sitemap.xml
 `;
   await Bun.write(join(DIST_DIR, 'robots.txt'), robotsTxt);
   console.log(`   ✓ Generated robots.txt → dist/robots.txt`);
@@ -111,21 +108,13 @@ async function main() {
       console.log("   ⚠ No static/ directory found, skipping\n");
     }
 
-    // Phase 3: Build CSS with Tailwind
-    console.log("🎨 Phase 3: Building CSS with Tailwind...");
-    
-    const tailwindResult = Bun.spawnSync([
-      "bunx", "@tailwindcss/cli",
-      "-i", CSS_INPUT,
-      "-o", CSS_OUTPUT,
-      "--minify"
-    ]);
-    
-    if (tailwindResult.exitCode !== 0) {
-      throw new Error(`Tailwind build failed: ${tailwindResult.stderr.toString()}`);
-    }
-    
-    console.log(`   ✓ Compiled ${CSS_INPUT} → ${CSS_OUTPUT}\n`);
+    // Phase 3: Copy CSS
+    console.log("🎨 Phase 3: Copying CSS...");
+
+    const css = await Bun.file(CSS_INPUT).text();
+    await Bun.write(CSS_OUTPUT, css);
+
+    console.log(`   ✓ Copied ${CSS_INPUT} → ${CSS_OUTPUT}\n`);
 
      // Phase 4: Generate pages
      console.log("📄 Phase 4: Generating pages...");

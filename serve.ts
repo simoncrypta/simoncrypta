@@ -38,6 +38,10 @@ function normalizeUrlPath(pathname: string): string {
     return "/index.html";
   }
 
+  if (!pathname.includes(".") && pathname.endsWith("/")) {
+    return `${pathname}index.html`;
+  }
+
   if (!pathname.includes(".") && !pathname.endsWith("/")) {
     return `${pathname}/index.html`;
   }

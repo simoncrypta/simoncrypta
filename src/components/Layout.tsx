@@ -3,6 +3,7 @@ import type { Children } from '@kitajs/html';
 import { SEO } from './SEO';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { SITE_CONFIG } from '../config';
 
 interface LayoutProps {
   children?: Children;
@@ -16,20 +17,11 @@ interface LayoutProps {
 export function Layout({
   children,
   title,
-  description,
+  description = SITE_CONFIG.description,
   currentPath = "/",
   image,
   isArticle = false
 }: LayoutProps) {
-  const fontLoaderScript = `
-    if ("fonts" in document) {
-      Promise.all([
-        document.fonts.load("500 1em 'Noto Sans'"),
-        document.fonts.load("400 1em 'Jersey 25'")
-      ]).then(() => document.documentElement.classList.add("fonts-loaded"));
-    }
-  `;
-
   return (
     <html lang="en-US">
       <head>
@@ -41,16 +33,16 @@ export function Layout({
           isArticle={isArticle}
         />
         
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet" />
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕️</text></svg>"
+        />
 
         <link rel="stylesheet" href="/styles.css" />
-        
-        <script>{fontLoaderScript}</script>
       </head>
-      <body className="font-sans font-medium m-0 p-5 max-w-3xl w-full text-left bg-[var(--color-bg)] noise-bg break-words leading-relaxed text-[var(--color-text)] min-h-screen flex flex-col box-border mx-auto text-xl overflow-hidden">
-        <Header currentPath={currentPath} />
-        <main className="flex-1 grid place-items-center">
+      <body>
+        <Header />
+        <main>
           {children}
         </main>
         <Footer />

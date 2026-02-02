@@ -1,12 +1,9 @@
 {
-  "active_plan": "/home/simoncrypta/Work/simoncrypta/.sisyphus/plans/react-to-kitajs.md",
-  "started_at": "2026-02-01T05:02:12.650Z",
-  "completed_at": "2026-02-01T05:12:00.000Z",
+  "active_plan": "/home/simoncrypta/Work/simoncrypta/.sisyphus/plans/typography-fixes.md",
+  "started_at": "2026-02-01T22:26:07.878Z",
   "session_ids": [
-    "ses_3e8830bb2ffevdphC7vQIm5vnJ"
+    "ses_3e5dc5bb6ffeW6IcYIcFxDNsZr",
+    "ses_3e404408bffe4nVaG6TWMRRQX5"
   ],
-  "plan_name": "react-to-kitajs",
-  "status": "completed",
-  "tasks_completed": 12,
-  "tasks_total": 12
+  "plan_name": "typography-fixes"
 }
