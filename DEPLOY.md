@@ -88,6 +88,7 @@ Workers Builds settings (**Worker → Settings → Builds**):
 
 - **Repository**: `simoncrypta/simoncrypta`, production branch `Main`
 - **Build command**: `npm run build && npx cf-wrangler build`
+- **Preview build command**: `npm run build && CLOUDFLARE_PREVIEW_BUILD=true npx cf-wrangler build` (marks the output as a Preview build, which `cf previews deploy --prebuilt` requires; `cloudflare.config.ts` then leaves out the custom domain, which previews can't claim)
 - **Deploy command**: `npx cf deploy --prebuilt`
 - **Preview (non-production branch) deploy command**: `npx cf previews deploy --prebuilt`
 - **Builds for non-production branches**: enabled (preview URLs)
