@@ -51,7 +51,7 @@ A request for a page with `Accept: text/markdown` (preferred over `text/html`) g
 curl -H "Accept: text/markdown" https://simoncrypta.dev/now/
 ```
 
-Because `runWorkerFirst: true`, every request invokes the Worker, including CSS and images, which it passes straight to assets. That's far inside the Workers free tier (100k requests/day). Cloudflare's zone-level "Markdown for Agents" feature is the no-Worker alternative, but it converts HTML instead of serving our Markdown source.
+Only page requests run the Worker: `runWorkerFirst: ["/*", "!/*.*"]` matches every path except ones with a file extension, and `*` matches across `/`. CSS, images, `.md`, `.xml` and `.txt` files are served straight from static assets, which are free and unlimited. Each page view is one Worker request, counted against the Workers Free plan's 100,000/day. If that limit is exceeded, the Worker on the custom domain returns error 1027 for pages until the next day. Files keep working. Cloudflare's zone-level "Markdown for Agents" feature is the no-Worker alternative, but it converts HTML instead of serving our Markdown source.
 
 `cf build` / `cf dev` generate `.cloudflare/` (build output and types). It's gitignored.
 

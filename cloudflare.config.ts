@@ -22,8 +22,11 @@ export default defineConfig((ctx) => ({
       // and unknown paths get dist/404.html with a 404 status.
       htmlHandling: "auto-trailing-slash",
       notFoundHandling: "404-page",
-      // Every request goes through the Worker (Accept negotiation, headers).
-      runWorkerFirst: true,
+      // Only page requests (paths without a file extension) run the Worker,
+      // for Accept negotiation and headers. Files (CSS, images, .md, .xml,
+      // .txt) are served straight from assets: free and not counted against
+      // the Workers request limit.
+      runWorkerFirst: ["/*", "!/*.*"],
     },
   },
 }));
