@@ -1,12 +1,38 @@
+---
+const links = [
+  { href: "/", label: "About" },
+  { href: "/now/", label: "Now" },
+  { href: "/uses/", label: "Uses" },
+];
+---
+
 <header>
-  <a href="/" class="title">
+  <a
+    href="/"
+    class="font-display text-[xx-large] font-normal text-accent not-italic no-underline mobile:text-[x-large]"
+  >
     <h2>Simon's Crypta</h2>
   </a>
-  <nav>
-    <a href="/">About</a>
-    <span class="nav-separator" aria-hidden="true">·</span>
-    <a href="/now/">Now</a>
-    <span class="nav-separator" aria-hidden="true">·</span>
-    <a href="/uses/">Uses</a>
+  <nav class="mb-4">
+    {
+      links.map(({ href, label }, i) => (
+        <>
+          {i > 0 && (
+            <span
+              class="mx-2 inline-block text-fg opacity-50 mobile:mx-[0.4rem]"
+              aria-hidden="true"
+            >
+              ·
+            </span>
+          )}
+          <a
+            href={href}
+            class="inline-block px-5 py-3 text-[1.5rem] mobile:px-4 mobile:py-[0.6rem] mobile:text-[1.25rem]"
+          >
+            {label}
+          </a>
+        </>
+      ))
+    }
   </nav>
 </header>

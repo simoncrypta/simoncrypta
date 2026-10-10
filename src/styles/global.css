@@ -1,286 +1,161 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jersey+25&display=swap");
 
-:root {
-  --bg-color: #f2f2f2;
-  --text-color: #1b1d36;
-  --link-color: #0066cc;
-  --code-bg: #1b1d36;
-  --code-text: #f2f2f2;
-  --blockquote-color: #d72638;
-  --visited-link: #551a8b;
-  --input-bg: #fff;
-  --input-text: #1b1d36;
-  --accent-color: #ffd400;
+/* Tailwind v4 without preflight: element defaults stay the browser's, so the
+   Markdown content keeps its look. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Same breakpoint as before (inclusive 768px). */
+@custom-variant mobile (@media (max-width: 768px));
+
+@theme {
+  --font-sans: "Noto Sans", sans-serif;
+  --font-display: "Jersey 25", sans-serif;
+
+  /* Light theme; dark values below. */
+  --color-bg: #f2f2f2;
+  --color-fg: #1b1d36;
+  --color-link: #0066cc;
+  --color-accent: #ffd400;
+  --color-code-bg: #1b1d36;
+  --color-code-fg: #f2f2f2;
+  --color-quote: #d72638;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #1b1d36;
-    --text-color: #f2f2f2;
-    --link-color: #ffd400;
-    --code-bg: #d72638;
-    --code-text: #f2f2f2;
-    --blockquote-color: #ffd400;
-    --visited-link: #d72638;
-    --input-bg: #1e96fc;
-    --input-text: #f2f2f2;
-    --accent-color: #ffd400;
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #1b1d36;
+      --color-fg: #f2f2f2;
+      --color-link: #ffd400;
+      --color-code-bg: #d72638;
+      --color-code-fg: #f2f2f2;
+      --color-quote: #ffd400;
+    }
   }
-}
 
-body {
-  font-family: "Noto Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  padding: 20px;
-  max-width: 720px;
-  width: 100%;
-  text-align: left;
-  background-color: var(--bg-color);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8' numOctaves='5' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='discrete' tableValues='0 .012 .02'/%3E%3CfeFuncG type='discrete' tableValues='0 .012 .02'/%3E%3CfeFuncB type='discrete' tableValues='0 .012 .02'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  line-height: 1.5;
-  color: var(--text-color);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  margin: 0 auto;
-  font-size: 1.5em;
-}
-
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong,
-b {
-  color: var(--text-color);
-}
-
-h1 {
-  margin-block-end: 0;
-}
-
-a {
-  color: var(--link-color);
-  text-decoration: underline;
-}
-
-main h2 {
-  font-size: 1.5rem;
-  margin-block-start: 0;
-  margin-block-end: 1.5em;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-}
-
-.title,
-h2.title {
-  font-family: "Jersey 25", sans-serif;
-  font-size: xx-large;
-  font-weight: 400;
-  font-style: normal;
-  text-decoration: none;
-  border: 0;
-  color: var(--accent-color);
-}
-
-.title span {
-  font-weight: 400;
-}
-
-nav {
-  margin-bottom: 1rem;
-}
-
-nav a {
-  padding: 0.75rem 1.25rem;
-  font-size: 1.5rem;
-  display: inline-block;
-}
-
-nav .nav-separator {
-  color: var(--text-color);
-  opacity: 0.5;
-  margin: 0 0.5rem;
-  display: inline-block;
-}
-
-a svg {
-  color: var(--text-color);
-  display: inline-block;
-  vertical-align: middle;
-}
-
-a svg[aria-hidden="true"] {
-  display: none;
-}
-
-a svg:not([aria-hidden="true"]) {
-  display: inline-block;
-}
-
-a svg + span {
-  margin-left: 0.5em;
-}
-
-textarea,
-input {
-  width: 100%;
-  font-size: 1.5em;
-  background-color: var(--input-bg);
-  color: var(--input-text);
-}
-
-content {
-  line-height: 1.6;
-}
-
-content h1 {
-  font-size: 2em;
-  line-height: 1.2;
-  margin: 0 0 0.75em;
-}
-
-content h2 {
-  font-size: 1.5em;
-  line-height: 1.3;
-  margin: 1.5em 0 0.6em;
-}
-
-content h3 {
-  font-size: 1.35em;
-  line-height: 1.35;
-  margin: 1.25em 0 0.5em;
-}
-
-content h4 {
-  font-size: 1.1em;
-  line-height: 1.4;
-  margin: 1em 0 0.4em;
-}
-
-table {
-  width: 100%;
-}
-
-img {
-  max-width: 100%;
-  max-height: 500px;
-}
-
-.helptext {
-  color: #aaa;
-  font-size: 1.5em;
-}
-
-code {
-  color: var(--code-text);
-  padding: 2px 5px;
-  background-color: var(--code-bg);
-}
-
-pre code {
-  color: var(--text-color);
-  display: block;
-  padding: 20px;
-  white-space: pre-wrap;
-  font-size: 0.875em;
-  overflow-x: auto;
-}
-
-div.highlight pre {
-  background-color: initial;
-  color: initial;
-}
-
-div.highlight code {
-  background-color: unset;
-  color: unset;
-}
-
-blockquote {
-  border-left: 1px solid #999;
-  color: var(--blockquote-color);
-  padding-left: 20px;
-  font-style: italic;
-}
-
-footer {
-  padding: 25px;
-  text-align: center;
-  margin-top: auto;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 0.8em;
-}
-
-footer a + a {
-  margin-left: 1rem;
-}
-
-.errorlist {
-  color: #d72638;
-  font-size: 1.5em;
-}
-
-.not-found {
-  text-align: center;
-  padding: 2em 0;
-}
-
-/* Mobile responsive typography */
-@media (max-width: 768px) {
   body {
-    font-size: 1.25em;
-    padding: 16px;
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    padding: 20px;
+    max-width: 720px;
+    width: 100%;
+    text-align: left;
+    background-color: var(--color-bg);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8' numOctaves='5' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='discrete' tableValues='0 .012 .02'/%3E%3CfeFuncG type='discrete' tableValues='0 .012 .02'/%3E%3CfeFuncB type='discrete' tableValues='0 .012 .02'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--color-fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 auto;
+    font-size: 1.5em;
+
+    @variant mobile {
+      font-size: 1.25em;
+      padding: 16px;
+    }
   }
 
-  .title,
-  h2.title {
-    font-size: x-large;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: var(--color-fg);
   }
 
-  nav {
-    margin-bottom: 1rem;
+  h1 {
+    margin-block-end: 0;
   }
 
-  nav a {
-    padding: 0.6rem 1rem;
-    font-size: 1.25rem;
+  a {
+    color: var(--color-link);
+    text-decoration: underline;
   }
 
-  nav .nav-separator {
-    margin: 0 0.4rem;
+  main h2 {
+    font-size: 1.5rem;
+    margin-block: 0 1.5em;
+    margin-inline: 0;
   }
 
-  content h1 {
-    font-size: 1.75em;
+  /* Rendered Markdown (<content>, see [...slug].astro) */
+  content {
+    line-height: 1.6;
+
+    & h1 {
+      font-size: 2em;
+      line-height: 1.2;
+      margin: 0 0 0.75em;
+      @variant mobile {
+        font-size: 1.75em;
+      }
+    }
+    & h2 {
+      font-size: 1.5em;
+      line-height: 1.3;
+      margin: 1.5em 0 0.6em;
+      @variant mobile {
+        font-size: 1.35em;
+      }
+    }
+    & h3 {
+      font-size: 1.35em;
+      line-height: 1.35;
+      margin: 1.25em 0 0.5em;
+      @variant mobile {
+        font-size: 1.2em;
+      }
+    }
+    & h4 {
+      font-size: 1.1em;
+      line-height: 1.4;
+      margin: 1em 0 0.4em;
+    }
   }
 
-  content h2 {
-    font-size: 1.35em;
+  table {
+    width: 100%;
   }
 
-  content h3 {
-    font-size: 1.2em;
+  img {
+    max-width: 100%;
+    max-height: 500px;
+  }
+
+  code {
+    color: var(--color-code-fg);
+    padding: 2px 5px;
+    background-color: var(--color-code-bg);
   }
 
   pre code {
-    font-size: 0.8em;
-    padding: 16px;
+    color: var(--color-fg);
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875em;
+    overflow-x: auto;
+    @variant mobile {
+      font-size: 0.8em;
+      padding: 16px;
+    }
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--color-quote);
+    padding-left: 20px;
+    font-style: italic;
   }
 }
