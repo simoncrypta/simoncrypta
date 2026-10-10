@@ -2,7 +2,7 @@
 
 ## Overview
 
-Simon's Crypta is a static site. Bun builds it into `dist/`, and a **Cloudflare Worker with static assets** serves it at `https://simoncrypta.dev`. It was migrated from Cloudflare Pages following the [Pages → Workers guide](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/).
+Simon's Crypta is a static site. [Astro](https://astro.build/) builds it into `dist/`, and a **Cloudflare Worker with static assets** serves it at `https://simoncrypta.dev`. It was migrated from Cloudflare Pages following the [Pages → Workers guide](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/).
 
 Cloudflare tooling uses the [`cf` CLI](https://developers.cloudflare.com/cf/), which replaces `wrangler`.
 
@@ -21,7 +21,8 @@ Output in `dist/`:
 - `index.xml` - RSS 2.0 feed
 - `index.md`, `now/index.md`, `uses/index.md` - Markdown copy of each page for agents (linked with `rel=alternate`)
 - `llms.txt` - site summary for LLMs, linking the Markdown pages
-- `styles.css` - site CSS
+- `_astro/*.css` - site CSS (hashed file name)
+- `_headers` - site-wide `Link` headers
 - `image.png` - static assets
 
 ## Configuration files
@@ -61,8 +62,14 @@ Only page requests run the Worker: `runWorkerFirst: ["/*", "!/*.*"]` matches eve
 ## Local development
 
 ```bash
-bun run dev           # Bun watch build + local server on :3000
-bun run cf:dev        # build, then serve dist/ through the Cloudflare runtime (cf dev, :8787)
+bun run dev             # astro dev on :4321 (fast reload, no Worker)
+bun run preview:worker  # astro build, then serve dist/ through the real Worker + assets (wrangler dev, :8787)
+```
+
+`cf dev` detects Astro and delegates to `astro dev`, which doesn't run `src/worker.ts`. `preview:worker` converts `cloudflare.config.ts` to a throwaway Wrangler config (`.cloudflare/wrangler.preview.json`) so Markdown negotiation and headers behave as in production. It needs Node, because the config loader doesn't support Bun.
+
+```bash
+curl -H "Accept: text/markdown" http://localhost:8787/now/
 ```
 
 ## Checks
@@ -84,7 +91,9 @@ Workers Builds settings (**Worker → Settings → Builds**):
 - **Deploy command**: `bunx cf deploy`
 - **Non-production branch deploy command**: `bunx cf workers versions create`
 - **Builds for non-production branches**: enabled (preview URLs)
-- **Build variable**: `BUN_VERSION=1.4.3`, to match `packageManager` in `package.json`
+- **Build variables**: `BUN_VERSION=1.4.3`, to match `packageManager` in `package.json`, and `NODE_VERSION=24` (Astro and Vite+ need Node 22.18+)
+
+`cf deploy` runs `astro build` itself (cf detects Astro), so the build command is only there to fail fast.
 
 ### Manual
 
