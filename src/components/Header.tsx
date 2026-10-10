@@ -6,9 +6,13 @@ export function Header() {
       </a>
       <nav>
         <a href="/">About</a>
-        <span className="nav-separator" aria-hidden="true">·</span>
+        <span className="nav-separator" aria-hidden="true">
+          ·
+        </span>
         <a href="/now/">Now</a>
-        <span className="nav-separator" aria-hidden="true">·</span>
+        <span className="nav-separator" aria-hidden="true">
+          ·
+        </span>
         <a href="/uses/">Uses</a>
       </nav>
     </header>

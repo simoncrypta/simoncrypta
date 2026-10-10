@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jersey+25&display=swap");
 
 :root {
   --bg-color: #f2f2f2;
@@ -28,7 +28,6 @@
     --accent-color: #ffd400;
   }
 }
-
 
 body {
   font-family: "Noto Sans", sans-serif;
@@ -60,11 +59,16 @@ main {
   justify-content: center;
 }
 
-h1, h2, h3, h4, h5, h6, strong, b {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b {
   color: var(--text-color);
 }
-
-
 
 h1 {
   margin-block-end: 0;
@@ -83,7 +87,8 @@ main h2 {
   margin-inline-end: 0;
 }
 
-.title, h2.title {
+.title,
+h2.title {
   font-family: "Jersey 25", sans-serif;
   font-size: xx-large;
   font-weight: 400;
@@ -132,7 +137,8 @@ a svg + span {
   margin-left: 0.5em;
 }
 
-textarea, input {
+textarea,
+input {
   width: 100%;
   font-size: 1.5em;
   background-color: var(--input-bg);
@@ -242,36 +248,37 @@ footer a + a {
     font-size: 1.25em;
     padding: 16px;
   }
-  
-  .title, h2.title {
+
+  .title,
+  h2.title {
     font-size: x-large;
   }
-  
+
   nav {
     margin-bottom: 1rem;
   }
-  
+
   nav a {
     padding: 0.6rem 1rem;
     font-size: 1.25rem;
   }
-  
+
   nav .nav-separator {
     margin: 0 0.4rem;
   }
-  
+
   content h1 {
     font-size: 1.75em;
   }
-  
+
   content h2 {
     font-size: 1.35em;
   }
-  
+
   content h3 {
     font-size: 1.2em;
   }
-  
+
   pre code {
     font-size: 0.8em;
     padding: 16px;

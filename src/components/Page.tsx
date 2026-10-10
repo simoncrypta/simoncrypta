@@ -1,4 +1,4 @@
-import type { Children } from '@kitajs/html';
+import type { Children } from "@kitajs/html";
 
 interface PageProps {
   html?: string;
@@ -6,8 +6,6 @@ interface PageProps {
   className?: string;
 }
 
-export const Page = ({ html, children, className = '' }: PageProps) => (
-  <content className={className}>
-    {html || children}
-  </content>
+export const Page = ({ html, children, className = "" }: PageProps) => (
+  <content className={className}>{html || children}</content>
 );

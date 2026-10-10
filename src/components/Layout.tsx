@@ -1,9 +1,8 @@
-import { Html } from '@kitajs/html';
-import type { Children } from '@kitajs/html';
-import { SEO } from './SEO';
-import { Header } from './Header';
-import { Footer } from './Footer';
-import { SITE_CONFIG } from '../config';
+import type { Children } from "@kitajs/html";
+import { SITE_CONFIG } from "../config";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { SEO } from "./SEO";
 
 interface LayoutProps {
   children?: Children;
@@ -20,19 +19,19 @@ export function Layout({
   description = SITE_CONFIG.description,
   currentPath = "/",
   image,
-  isArticle = false
+  isArticle = false,
 }: LayoutProps) {
   return (
     <html lang="en-US">
       <head>
-        <SEO 
-          title={title} 
-          description={description} 
-          url={currentPath} 
+        <SEO
+          title={title}
+          description={description}
+          url={currentPath}
           image={image}
           isArticle={isArticle}
         />
-        
+
         <link
           rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕️</text></svg>"
@@ -42,11 +41,9 @@ export function Layout({
       </head>
       <body>
         <Header />
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
   );
-};
+}
