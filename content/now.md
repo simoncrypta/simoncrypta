@@ -2,8 +2,9 @@
 *Updated on February 1, 2026*
 
 ## Work
-### Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
-#### Current projects
+
+Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
+
 - Full-stack TS development with [RedwoodJS](https://redwoodjs.com/)
 - Building a consumer report experience to help dealerships make loan decisions
 - Improving our tool and design to continue shipping fast 
@@ -19,7 +20,7 @@
 - The Autobiography of Benjamin Franklin
 
 ## Music
-### Recently Added
+
 - USB by Fred again..
 - Deadbeat by Tame Impala
 - DON’T TAP THE GLASS by Tyler, The Creator 
