@@ -16,7 +16,8 @@
     "format": "biome check --write .",
     "cf:dev": "bun run build && cf dev",
     "deploy:check": "bun run build && cf deploy --dry-run",
-    "deploy": "bun run build && cf deploy"
+    "deploy": "bun run build && cf deploy",
+    "preview:upload": "bun run build && cf workers versions create"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",

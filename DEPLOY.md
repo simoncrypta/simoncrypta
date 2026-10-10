@@ -1,11 +1,9 @@
 # Cloudflare Deployment Guide
 
 ## Overview
-Simon's Crypta is a static site. Bun builds it into the `dist/` directory, and Cloudflare serves it.
+Simon's Crypta is a static site. Bun builds it into `dist/`, and a **Cloudflare Worker with static assets** serves it at `https://simoncrypta.dev`. It was migrated from Cloudflare Pages following the [Pages → Workers guide](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/).
 
-Cloudflare tooling uses the [`cf` CLI](https://developers.cloudflare.com/cf/), which replaces `wrangler`. `cf` doesn't support legacy Cloudflare Pages, so the project is configured as a **Worker with static assets**. That's the "Pages on Workers" model.
-
-> **Current production:** the site is still served by the existing Cloudflare Pages project (`simoncrypta`). It's deployed by the Pages Git integration using the dashboard build settings below. Running `cf deploy` would publish a separate Worker named `simoncrypta`. See [Moving production to cf](#moving-production-to-cf).
+Cloudflare tooling uses the [`cf` CLI](https://developers.cloudflare.com/cf/), which replaces `wrangler`.
 
 ## Build
 
@@ -24,13 +22,20 @@ Output in `dist/`:
 
 | File | Purpose |
 | --- | --- |
-| `cloudflare.config.ts` | cf project config: Worker name, compatibility date, asset routing |
+| `cloudflare.config.ts` | cf project config: Worker name, compatibility date, custom domain, workers.dev, preview URLs, asset routing |
 | `wrangler.config.ts` | Build settings that cf hands to its Wrangler bundler (`assetsDirectory: ./dist`) |
-| `package.json` | Build and deploy scripts |
+| `package.json` | Build, preview and deploy scripts |
 
-Asset routing matches Cloudflare Pages:
-- `htmlHandling: "auto-trailing-slash"` redirects `/now` to `/now/` and serves `now/index.html`.
-- `notFoundHandling: "404-page"` serves `dist/404.html` with a 404 status for unknown paths.
+Behaviour carried over from Pages:
+
+| Pages | Workers (`cloudflare.config.ts`) |
+| --- | --- |
+| `pages_build_output_dir = "dist"` | `assetsDirectory: "./dist"` (in `wrangler.config.ts`) |
+| `/now` → `/now/` | `assets.htmlHandling: "auto-trailing-slash"` |
+| `404.html` used automatically | `assets.notFoundHandling: "404-page"` |
+| `simoncrypta.pages.dev` | `workersDev: true` → `simoncrypta.<subdomain>.workers.dev` |
+| Preview deployments | `previewUrls: true` + Workers Builds preview builds |
+| Custom domain on the Pages project | `domains: ["simoncrypta.dev"]` |
 
 `cf build` / `cf dev` generate `.cloudflare/` (build output and types). It's gitignored.
 
@@ -38,7 +43,7 @@ Asset routing matches Cloudflare Pages:
 
 ```bash
 bun run dev           # Bun watch build + local server on :3000
-bun run cf:dev        # build, then serve dist/ through the Cloudflare runtime (cf dev)
+bun run cf:dev        # build, then serve dist/ through the Cloudflare runtime (cf dev, :8787)
 ```
 
 ## Checks
@@ -51,38 +56,45 @@ bun run deploy:check  # build + cf deploy --dry-run (validates, uploads nothing)
 
 ## Deployment
 
-### Current: Cloudflare Pages Git integration
-1. Push to `Main` on GitHub.
-2. Cloudflare Pages builds with the dashboard settings and deploys to `https://simoncrypta.pages.dev`.
-
-Dashboard settings:
+### Automatic: Workers Builds (Git integration)
+Workers Builds settings (**Worker → Settings → Builds**):
+- **Repository**: `simoncrypta/simoncrypta`, production branch `Main`
 - **Build command**: `bun run build`
-- **Build output directory**: `dist`
-- **Root directory**: `/`
-- **Framework preset**: None
+- **Deploy command**: `bunx cf deploy`
+- **Non-production branch deploy command**: `bunx cf workers versions create`
+- **Builds for non-production branches**: enabled (preview URLs)
+- **Build variable**: `BUN_VERSION=1.4.3`, to match `packageManager` in `package.json`
 
-The repo no longer has a `wrangler.toml`, so Pages uses these dashboard settings.
-
-### Moving production to cf
+### Manual
 ```bash
 cf auth login
-bun run deploy        # bun run build && cf deploy
+bun run deploy          # build + cf deploy (production)
+bun run preview:upload  # build + upload a version with a preview URL, no deploy
 ```
 
-This creates or updates the `simoncrypta` Worker with the contents of `dist/`. To cut over:
-1. Deploy and check the `workers.dev` URL.
-2. Move the custom domain from the Pages project to the Worker.
-3. Disconnect or delete the Pages project.
+## Cutover from Pages (one-time)
+
+Do this once, in order. Until step 4, Pages keeps serving the site.
+
+1. **Remove the custom domain from the Pages project.** Go to Pages → `simoncrypta` → Custom domains and remove `simoncrypta.dev`. The Worker deploy attaches the domain itself, and it conflicts if Pages still holds it.
+2. **Disable automatic deployments on the Pages project** (Settings → Builds), to avoid double deploys.
+3. **Connect Workers Builds** with the settings above. Set a personalized `workers.dev` subdomain in the dashboard if you don't have one yet.
+4. **Deploy.** Push to `Main`, or run `bun run deploy`. Then check `https://simoncrypta.dev` and the workers.dev URL.
+5. **Delete the Pages project** once the Worker has served traffic for a while.
+
+Doing step 1 just before step 4 keeps downtime to a few seconds while the domain moves.
 
 ## Troubleshooting
 
 - **Build fails**: run `bun run build` locally and check the output.
 - **`cf build` warns about the Docker socket**: harmless. It's the containers check, and this project has no containers.
-- **Pages not loading**: make sure `dist/` contains `index.html`, `styles.css` and the assets.
+- **Deploy fails on the custom domain**: the domain is probably still attached to the Pages project (cutover step 1).
+- **`www.simoncrypta.dev` returns 522**: this predates the migration. It has a DNS record but no origin. Add it to `domains`, or redirect it to the apex domain with a Redirect Rule.
 
 ## Additional resources
 
 - [cf CLI](https://developers.cloudflare.com/cf/)
 - [Migrating from Wrangler to cf](https://developers.cloudflare.com/cf/wrangler/migrate/)
+- [Migrate from Pages to Workers](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/)
 - [Workers static assets](https://developers.cloudflare.com/workers/static-assets/)
 - [Bun documentation](https://bun.sh/docs)
