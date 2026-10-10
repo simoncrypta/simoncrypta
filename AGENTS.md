@@ -6,7 +6,7 @@
 - `bun run typecheck` - Typecheck with TypeScript (`tsc --noEmit`)
 - `bun run lint` - Lint and format check with Biome (`bun run format` to fix)
 - `bun run cf:dev` - Build, then serve `dist/` with the Cloudflare `cf` CLI
-- Build also emits `robots.txt` (with Content-Signal), `sitemap.xml` and the RSS feed `index.xml` (`src/lib/feeds.ts`)
+- Build also emits `robots.txt` (with Content-Signal), `sitemap.xml` the RSS feed `index.xml`, `llms.txt` and a Markdown copy of each page (`<page>/index.md`) (`src/lib/feeds.ts`)
 - `bun run deploy:check` - Build + `cf deploy --dry-run` (never uploads)
 
 ## Cloudflare

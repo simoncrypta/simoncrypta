@@ -16,9 +16,11 @@ import { Layout } from "./src/components/Layout";
 import { NotFound } from "./src/components/NotFound";
 import { Page } from "./src/components/Page";
 import {
+  buildLlmsTxt,
   buildRobotsTxt,
   buildRss,
   buildSitemap,
+  markdownPath,
   type SitePage,
 } from "./src/lib/feeds";
 import { parseMarkdown } from "./src/lib/markdown";
@@ -49,7 +51,12 @@ async function generatePages(): Promise<SitePage[]> {
       : join(DIST_DIR, slug, "index.html");
 
     const urlPath = isIndexFile ? "/" : `/${slug}/`;
-    pages.push({ title: parsed.title, path: urlPath, updated: parsed.updated });
+    pages.push({
+      title: parsed.title,
+      path: urlPath,
+      updated: parsed.updated,
+      summary: parsed.heading,
+    });
 
     if (!isIndexFile) {
       mkdirSync(join(DIST_DIR, slug), { recursive: true });
@@ -60,6 +67,7 @@ async function generatePages(): Promise<SitePage[]> {
         title={parsed.title}
         currentPath={urlPath}
         isArticle={!isIndexFile}
+        markdownPath={markdownPath(urlPath)}
       >
         <Page html={parsed.html} />
       </Layout>
@@ -67,6 +75,8 @@ async function generatePages(): Promise<SitePage[]> {
 
     const fullHtml = `<!DOCTYPE html>\n${html}`;
     await Bun.write(outputPath, fullHtml);
+    // Markdown copy for agents, next to the HTML page.
+    await Bun.write(join(DIST_DIR, markdownPath(urlPath)), parsed.content);
 
     console.log(
       `   ✓ Generated ${file} → ${outputPath.replace(`${DIST_DIR}/`, "")}`,
@@ -96,7 +106,10 @@ async function generateFeeds(pages: SitePage[]) {
   await Bun.write(join(DIST_DIR, "robots.txt"), buildRobotsTxt());
   await Bun.write(join(DIST_DIR, "sitemap.xml"), buildSitemap(pages));
   await Bun.write(join(DIST_DIR, "index.xml"), buildRss(pages));
-  console.log(`   ✓ Generated robots.txt, sitemap.xml, index.xml (RSS)`);
+  await Bun.write(join(DIST_DIR, "llms.txt"), buildLlmsTxt(pages));
+  console.log(
+    `   ✓ Generated robots.txt, sitemap.xml, index.xml (RSS), llms.txt`,
+  );
 }
 
 async function main() {

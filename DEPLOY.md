@@ -17,6 +17,8 @@ Output in `dist/`:
 - `robots.txt` - crawl rules, AI `Content-Signal` and the sitemap location
 - `sitemap.xml` - all pages, with `lastmod` from each page's "Updated on" line
 - `index.xml` - RSS 2.0 feed
+- `index.md`, `now/index.md`, `uses/index.md` - Markdown copy of each page for agents (linked with `rel=alternate`)
+- `llms.txt` - site summary for LLMs, linking the Markdown pages
 - `styles.css` - site CSS
 - `image.png` - static assets
 
