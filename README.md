@@ -1,1 +1,1 @@
-*Crypta : Latin word for vault, also the French verb for encrypt, "crypter", in third-person singular past historic.*
+_Crypta : Latin word for vault, also the French verb for encrypt, "crypter", in third-person singular past historic._

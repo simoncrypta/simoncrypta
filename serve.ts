@@ -27,7 +27,8 @@ serve({
           "Content-Type": getContentType(filePath),
         },
       });
-    } catch (_error) {
+    } catch (error) {
+      console.error(error);
       return new Response("Internal Server Error", { status: 500 });
     }
   },

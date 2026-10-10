@@ -4,20 +4,11 @@ export function Footer() {
       <p>From Montréal, Canada 🍁</p>
       <hr />
       <p>
-        You can contact me at [Your Name]@simoncrypta.dev <br /> for any good
-        reason 🙂
+        You can contact me at [Your Name]@simoncrypta.dev <br /> for any good reason 🙂
       </p>
       <hr />
-      <a
-        href="https://github.com/simoncrypta/simoncrypta"
-        aria-label="GitHub profile"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="20"
-          viewBox="0 0 16 16"
-          width="20"
-        >
+      <a href="https://github.com/simoncrypta/simoncrypta" aria-label="GitHub profile">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 16 16" width="20">
           <title>GitHub</title>
           <path
             fill="currentColor"

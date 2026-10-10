@@ -36,9 +36,7 @@ async function generatePages(): Promise<SitePage[]> {
   // Stable order (home first, then by name) for the sitemap and RSS feed.
   const contentFiles = readdirSync(CONTENT_DIR)
     .filter((f) => f.endsWith(".md"))
-    .sort((a, b) =>
-      a === "index.md" ? -1 : b === "index.md" ? 1 : a.localeCompare(b),
-    );
+    .sort((a, b) => (a === "index.md" ? -1 : b === "index.md" ? 1 : a.localeCompare(b)));
 
   for (const file of contentFiles) {
     const filePath = join(CONTENT_DIR, file);
@@ -78,9 +76,7 @@ async function generatePages(): Promise<SitePage[]> {
     // Markdown copy for agents, next to the HTML page.
     await Bun.write(join(DIST_DIR, markdownPath(urlPath)), parsed.content);
 
-    console.log(
-      `   ✓ Generated ${file} → ${outputPath.replace(`${DIST_DIR}/`, "")}`,
-    );
+    console.log(`   ✓ Generated ${file} → ${outputPath.replace(`${DIST_DIR}/`, "")}`);
   }
 
   return pages;
@@ -88,11 +84,7 @@ async function generatePages(): Promise<SitePage[]> {
 
 async function generate404Page() {
   const html = (
-    <Layout
-      title="404 - Page Not Found"
-      description="Page not found"
-      currentPath="/404"
-    >
+    <Layout title="404 - Page Not Found" description="Page not found" currentPath="/404">
       <NotFound />
     </Layout>
   ) as string;
@@ -107,9 +99,7 @@ async function generateFeeds(pages: SitePage[]) {
   await Bun.write(join(DIST_DIR, "sitemap.xml"), buildSitemap(pages));
   await Bun.write(join(DIST_DIR, "index.xml"), buildRss(pages));
   await Bun.write(join(DIST_DIR, "llms.txt"), buildLlmsTxt(pages));
-  console.log(
-    `   ✓ Generated robots.txt, sitemap.xml, index.xml (RSS), llms.txt`,
-  );
+  console.log(`   ✓ Generated robots.txt, sitemap.xml, index.xml (RSS), llms.txt`);
 }
 
 async function main() {
@@ -163,4 +153,4 @@ async function main() {
   }
 }
 
-main();
+void main();

@@ -8,13 +8,7 @@ interface SEOProps {
   isArticle?: boolean;
 }
 
-export function SEO({
-  title,
-  description,
-  url,
-  image,
-  isArticle = false,
-}: SEOProps) {
+export function SEO({ title, description, url, image, isArticle = false }: SEOProps) {
   const finalTitle = title
     ? title === SITE_CONFIG.title
       ? SITE_CONFIG.title
