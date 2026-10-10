@@ -1,113 +1,88 @@
-# Cloudflare Pages Deployment Guide
+# Cloudflare Deployment Guide
 
 ## Overview
-Simon's Crypta is deployed on Cloudflare Pages as a static site. The site is built using Bun and generates static HTML files in the `dist/` directory.
+Simon's Crypta is a static site. Bun builds it into the `dist/` directory, and Cloudflare serves it.
 
-## Build Configuration
+Cloudflare tooling uses the [`cf` CLI](https://developers.cloudflare.com/cf/), which replaces `wrangler`. `cf` doesn't support legacy Cloudflare Pages, so the project is configured as a **Worker with static assets**. That's the "Pages on Workers" model.
 
-### Build Command
+> **Current production:** the site is still served by the existing Cloudflare Pages project (`simoncrypta`). It's deployed by the Pages Git integration using the dashboard build settings below. Running `cf deploy` would publish a separate Worker named `simoncrypta`. See [Moving production to cf](#moving-production-to-cf).
+
+## Build
+
 ```bash
 bun run build
 ```
 
-### Build Output Directory
-```
-dist/
-```
-
-### Build Output Contents
-The build process generates:
-- `index.html` - Home page
-- `now/index.html` - Now page
-- `uses/index.html` - Uses page
-- `404.html` - Custom 404 error page
-- `index.xml` - RSS feed
+Output in `dist/`:
+- `index.html`, `now/index.html`, `uses/index.html` - pages
+- `404.html` - custom 404 page
 - `robots.txt` - SEO robots configuration
-- `styles.css` - Compiled Tailwind CSS
-- `image.png` - Static assets
+- `styles.css` - site CSS
+- `image.png` - static assets
 
-## Cloudflare Pages Setup
+## Configuration files
 
-### Dashboard Configuration
-1. **Project Name**: `simoncrypta`
-2. **Build Command**: `bun run build`
-3. **Build Output Directory**: `dist`
-4. **Root Directory**: `/` (default)
-5. **Environment**: Production
+| File | Purpose |
+| --- | --- |
+| `cloudflare.config.ts` | cf project config: Worker name, compatibility date, asset routing |
+| `wrangler.config.ts` | Build settings that cf hands to its Wrangler bundler (`assetsDirectory: ./dist`) |
+| `package.json` | Build and deploy scripts |
 
-### Required Settings
-- **Framework Preset**: None (static site)
-- **Node.js Version**: 20.x or later (for Bun compatibility)
-- **Compatibility Date**: 2026-02-01
+Asset routing matches Cloudflare Pages:
+- `htmlHandling: "auto-trailing-slash"` redirects `/now` to `/now/` and serves `now/index.html`.
+- `notFoundHandling: "404-page"` serves `dist/404.html` with a 404 status for unknown paths.
 
-## Environment Variables
-Currently, no environment variables are required for deployment.
+`cf build` / `cf dev` generate `.cloudflare/` (build output and types). It's gitignored.
 
-If needed in the future, add them in the Cloudflare Pages dashboard under:
-**Settings → Environment Variables → Production**
+## Local development
 
-## Local Development & Testing
-
-### Build Locally
 ```bash
-bun run build
+bun run dev           # Bun watch build + local server on :3000
+bun run cf:dev        # build, then serve dist/ through the Cloudflare runtime (cf dev)
 ```
 
-### Preview Build Output
+## Checks
+
 ```bash
-# Using wrangler (Cloudflare's CLI)
-bunx wrangler pages dev dist --port 8788
+bun run typecheck     # tsc (TypeScript 7)
+bun run lint          # biome check
+bun run deploy:check  # build + cf deploy --dry-run (validates, uploads nothing)
 ```
 
-Then visit: `http://localhost:8788`
+## Deployment
 
-### Verify Build Files
+### Current: Cloudflare Pages Git integration
+1. Push to `Main` on GitHub.
+2. Cloudflare Pages builds with the dashboard settings and deploys to `https://simoncrypta.pages.dev`.
+
+Dashboard settings:
+- **Build command**: `bun run build`
+- **Build output directory**: `dist`
+- **Root directory**: `/`
+- **Framework preset**: None
+
+The repo no longer has a `wrangler.toml`, so Pages uses these dashboard settings.
+
+### Moving production to cf
 ```bash
-# List all generated files
-ls -la dist/
-
-# Check specific required files
-ls dist/index.html dist/now/index.html dist/uses/index.html dist/404.html dist/index.xml dist/robots.txt dist/styles.css
+cf auth login
+bun run deploy        # bun run build && cf deploy
 ```
 
-## Deployment Process
-
-### Automatic Deployment (Recommended)
-1. Push changes to the main branch on GitHub
-2. Cloudflare Pages automatically triggers a build
-3. Site is deployed to `https://simoncrypta.pages.dev`
-
-### Manual Deployment
-If needed, you can manually trigger a deployment in the Cloudflare Pages dashboard:
-1. Go to **Deployments** tab
-2. Click **Retry Build** on the latest deployment
+This creates or updates the `simoncrypta` Worker with the contents of `dist/`. To cut over:
+1. Deploy and check the `workers.dev` URL.
+2. Move the custom domain from the Pages project to the Worker.
+3. Disconnect or delete the Pages project.
 
 ## Troubleshooting
 
-### Build Fails
-- Check that `bun run build` works locally
-- Verify all dependencies are in `package.json`
-- Check build logs in Cloudflare Pages dashboard
+- **Build fails**: run `bun run build` locally and check the output.
+- **`cf build` warns about the Docker socket**: harmless. It's the containers check, and this project has no containers.
+- **Pages not loading**: make sure `dist/` contains `index.html`, `styles.css` and the assets.
 
-### Pages Not Loading
-- Verify `dist/` contains `index.html`
-- Check that CSS and assets are in `dist/`
-- Clear browser cache and try again
+## Additional resources
 
-### Custom Domain
-To add a custom domain:
-1. Go to **Settings → Custom Domains**
-2. Add your domain and follow DNS configuration steps
-
-## Files Reference
-
-- `wrangler.toml` - Wrangler configuration for local preview
-- `package.json` - Build script and dependencies
-- `build.ts` - Build script that generates static files
-- `dist/` - Generated static site (not committed to git)
-
-## Additional Resources
-
-- [Cloudflare Pages Documentation](https://developers.cloudflare.com/pages/)
-- [Wrangler CLI Documentation](https://developers.cloudflare.com/workers/wrangler/)
-- [Bun Documentation](https://bun.sh/docs)
+- [cf CLI](https://developers.cloudflare.com/cf/)
+- [Migrating from Wrangler to cf](https://developers.cloudflare.com/cf/wrangler/migrate/)
+- [Workers static assets](https://developers.cloudflare.com/workers/static-assets/)
+- [Bun documentation](https://bun.sh/docs)

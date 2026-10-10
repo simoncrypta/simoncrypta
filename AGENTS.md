@@ -3,6 +3,15 @@
 ## Build Commands
 - `bun run build` - Build static site to `dist/` directory
 - `bun run serve.ts` - Serve built site locally (optional)
+- `bun run typecheck` - Typecheck with TypeScript (`tsc --noEmit`)
+- `bun run lint` - Lint and format check with Biome (`bun run format` to fix)
+- `bun run cf:dev` - Build, then serve `dist/` with the Cloudflare `cf` CLI
+- `bun run deploy:check` - Build + `cf deploy --dry-run` (never uploads)
+
+## Cloudflare
+- Use the `cf` CLI, not `wrangler` (wrangler stays installed only as cf's bundler)
+- Config: `cloudflare.config.ts` (Worker + static assets) and `wrangler.config.ts` (assets directory)
+- Discover commands with `cf cli search "<task>"`; see DEPLOY.md
 
 ## Code Style Guidelines
 
