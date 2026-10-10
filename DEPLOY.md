@@ -1,6 +1,7 @@
 # Cloudflare Deployment Guide
 
 ## Overview
+
 Simon's Crypta is a static site. Bun builds it into `dist/`, and a **Cloudflare Worker with static assets** serves it at `https://simoncrypta.dev`. It was migrated from Cloudflare Pages following the [Pages → Workers guide](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/).
 
 Cloudflare tooling uses the [`cf` CLI](https://developers.cloudflare.com/cf/), which replaces `wrangler`.
@@ -12,6 +13,7 @@ bun run build
 ```
 
 Output in `dist/`:
+
 - `index.html`, `now/index.html`, `uses/index.html` - pages
 - `404.html` - custom 404 page
 - `robots.txt` - crawl rules, AI `Content-Signal` and the sitemap location
@@ -24,27 +26,28 @@ Output in `dist/`:
 
 ## Configuration files
 
-| File | Purpose |
-| --- | --- |
-| `cloudflare.config.ts` | cf project config: Worker name, compatibility date, entrypoint + `ASSETS` binding, custom domain, workers.dev, preview URLs, asset routing |
-| `src/worker.ts` | Small Worker that runs before assets: Markdown content negotiation, `Vary`/`Link` headers |
-| `static/_headers` | Site-wide `Link` headers (sitemap, llms.txt, RSS), copied to `dist/` |
-| `wrangler.config.ts` | Build settings that cf hands to its Wrangler bundler (`assetsDirectory: ./dist`) |
-| `cloudflare/redirect-rules.json` | Zone Redirect Rules (`www` → apex), applied with `cf rulesets` |
-| `package.json` | Build, preview and deploy scripts |
+| File                             | Purpose                                                                                                                                    |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cloudflare.config.ts`           | cf project config: Worker name, compatibility date, entrypoint + `ASSETS` binding, custom domain, workers.dev, preview URLs, asset routing |
+| `src/worker.ts`                  | Small Worker that runs before assets: Markdown content negotiation, `Vary`/`Link` headers                                                  |
+| `static/_headers`                | Site-wide `Link` headers (sitemap, llms.txt, RSS), copied to `dist/`                                                                       |
+| `wrangler.config.ts`             | Build settings that cf hands to its Wrangler bundler (`assetsDirectory: ./dist`)                                                           |
+| `cloudflare/redirect-rules.json` | Zone Redirect Rules (`www` → apex), applied with `cf rulesets`                                                                             |
+| `package.json`                   | Build, preview and deploy scripts                                                                                                          |
 
 Behaviour carried over from Pages:
 
-| Pages | Workers (`cloudflare.config.ts`) |
-| --- | --- |
-| `pages_build_output_dir = "dist"` | `assetsDirectory: "./dist"` (in `wrangler.config.ts`) |
-| `/now` → `/now/` | `assets.htmlHandling: "auto-trailing-slash"` |
-| `404.html` used automatically | `assets.notFoundHandling: "404-page"` |
-| `simoncrypta.pages.dev` | `workersDev: true` → `simoncrypta.<subdomain>.workers.dev` |
-| Preview deployments | `previewUrls: true` + Workers Builds preview builds |
-| Custom domain on the Pages project | `domains: ["simoncrypta.dev"]` |
+| Pages                              | Workers (`cloudflare.config.ts`)                           |
+| ---------------------------------- | ---------------------------------------------------------- |
+| `pages_build_output_dir = "dist"`  | `assetsDirectory: "./dist"` (in `wrangler.config.ts`)      |
+| `/now` → `/now/`                   | `assets.htmlHandling: "auto-trailing-slash"`               |
+| `404.html` used automatically      | `assets.notFoundHandling: "404-page"`                      |
+| `simoncrypta.pages.dev`            | `workersDev: true` → `simoncrypta.<subdomain>.workers.dev` |
+| Preview deployments                | `previewUrls: true` + Workers Builds preview builds        |
+| Custom domain on the Pages project | `domains: ["simoncrypta.dev"]`                             |
 
 ### Markdown for agents
+
 A request for a page with `Accept: text/markdown` (preferred over `text/html`) gets the page's Markdown copy (`<page>/index.md`) instead of HTML. Browsers are unaffected. HTML responses carry `Vary: Accept` and a `Link: <…/index.md>; rel="alternate"; type="text/markdown"` header.
 
 ```bash
@@ -65,15 +68,17 @@ bun run cf:dev        # build, then serve dist/ through the Cloudflare runtime (
 ## Checks
 
 ```bash
-bun run typecheck     # tsc (TypeScript 7)
-bun run lint          # biome check
+bun run check         # vp check: oxfmt + oxlint (type-aware) + type checks
+bun run fix           # vp check --fix
 bun run deploy:check  # build + cf deploy --dry-run (validates, uploads nothing)
 ```
 
 ## Deployment
 
 ### Automatic: Workers Builds (Git integration)
+
 Workers Builds settings (**Worker → Settings → Builds**):
+
 - **Repository**: `simoncrypta/simoncrypta`, production branch `Main`
 - **Build command**: `bun run build`
 - **Deploy command**: `bunx cf deploy`
@@ -82,6 +87,7 @@ Workers Builds settings (**Worker → Settings → Builds**):
 - **Build variable**: `BUN_VERSION=1.4.3`, to match `packageManager` in `package.json`
 
 ### Manual
+
 ```bash
 cf auth login
 bun run deploy          # build + cf deploy (production)

@@ -57,9 +57,7 @@ export default {
     }
 
     const response = await env.ASSETS.fetch(request);
-    const isHtml = response.headers
-      .get("Content-Type")
-      ?.startsWith("text/html");
+    const isHtml = response.headers.get("Content-Type")?.startsWith("text/html");
     if (!markdownPath || !isHtml || !response.ok) return response;
 
     return withHeaders(response, {

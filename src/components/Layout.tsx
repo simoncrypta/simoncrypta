@@ -46,9 +46,7 @@ export function Layout({
           title={SITE_CONFIG.title}
           href="/index.xml"
         />
-        {markdownPath && (
-          <link rel="alternate" type="text/markdown" href={markdownPath} />
-        )}
+        {markdownPath && <link rel="alternate" type="text/markdown" href={markdownPath} />}
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
