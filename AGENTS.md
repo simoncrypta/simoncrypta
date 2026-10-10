@@ -39,10 +39,11 @@
 
 ### Styling
 
-- Plain CSS (no Tailwind yet; planned in simoncrypta-kti.6)
-- Custom styles in `src/styles/global.css`
-- Dark/light theme via `prefers-color-scheme` (no manual toggle)
-- Color scheme: light (#f2f2f2 bg), dark (#1b1d36 bg)
+- Tailwind CSS v4 via `@tailwindcss/vite`, configured in CSS (`src/styles/global.css`): no `tailwind.config`, no preflight
+- Theme tokens in `@theme`: colors `bg`, `fg`, `link`, `accent`, `code-bg`, `code-fg`, `quote`; fonts `font-sans` (Noto Sans), `font-display` (Jersey 25)
+- Dark/light via `prefers-color-scheme` overriding the same variables (no manual toggle); light #f2f2f2 bg, dark #1b1d36 bg
+- `mobile:` variant = `max-width: 768px`
+- Use utility classes in components; Markdown content can't take classes, so its typography lives in `@layer base` (`content` element rules)
 
 ### Content
 

@@ -1,4 +1,5 @@
 import { satteri } from "@astrojs/markdown-satteri";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
@@ -11,6 +12,9 @@ export default defineConfig({
     format: "directory",
     // One cached stylesheet (/_astro/*.css) instead of inline <style> per page.
     inlineStylesheets: "never",
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
   markdown: {
     // Keep the authored punctuation as-is (no curly quotes or em dashes).
