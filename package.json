@@ -13,13 +13,18 @@
     "preview": "bun build.tsx && bun serve.ts",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
-    "format": "biome check --write ."
+    "format": "biome check --write .",
+    "cf:dev": "bun run build && cf dev",
+    "deploy:check": "bun run build && cf deploy --dry-run",
+    "deploy": "bun run build && cf deploy"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
     "@types/bun": "^1.4.2",
+    "cf": "1.0.0-beta.14",
     "typescript": "^7.0.2",
-    "typescript-language-server": "^6.0.2"
+    "typescript-language-server": "^6.0.2",
+    "wrangler": "^4.149.0"
   },
   "dependencies": {
     "@kitajs/html": "^4.2.13"

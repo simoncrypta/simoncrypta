@@ -4,6 +4,7 @@ node_modules/
 
 # Local state and cache
 .wrangler/
+.cloudflare/
 .sisyphus/
 .playwright-cli/
 
