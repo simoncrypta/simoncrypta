@@ -14,3 +14,6 @@ tmp/
 
 # beads lock file
 .beads.gate.lock
+
+# Astro generated types
+.astro/

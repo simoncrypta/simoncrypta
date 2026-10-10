@@ -1,0 +1,25 @@
+---
+import { render } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import { markdownPath } from "../lib/feeds";
+import { type ContentPage, getContentPages } from "../lib/pages";
+
+export async function getStaticPaths() {
+  const pages = await getContentPages();
+  return pages.map((page) => ({ params: { slug: page.slug }, props: page }));
+}
+
+const page = Astro.props as ContentPage;
+const { Content } = await render(page.entry);
+---
+
+<Layout
+  title={page.title}
+  currentPath={page.path}
+  isArticle={page.slug !== undefined}
+  markdownPath={markdownPath(page.path)}
+>
+  <content class="">
+    <Content />
+  </content>
+</Layout>

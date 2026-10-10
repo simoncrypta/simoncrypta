@@ -3,22 +3,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun build.tsx",
-    "dev": "bun --watch build.tsx & bun serve.ts",
-    "serve": "bun serve.ts",
-    "preview": "bun build.tsx && bun serve.ts",
-    "check": "vp check",
-    "fix": "vp check --fix",
-    "cf:dev": "bun run build && cf dev",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && astro preview",
+    "preview:worker": "astro build && node scripts/worker-preview.ts",
+    "check": "astro sync && vp check",
+    "fix": "astro sync && vp check --fix",
     "deploy:check": "bun run build && cf deploy --dry-run",
     "deploy": "bun run build && cf deploy",
     "preview:upload": "bun run build && cf workers versions create"
   },
   "dependencies": {
-    "@kitajs/html": "^4.2.13"
+    "@astrojs/markdown-satteri": "^0.4.3",
+    "astro": "^7.3.8"
   },
   "devDependencies": {
-    "@types/bun": "^1.4.2",
+    "@cloudflare/config": "0.24.1",
+    "@types/node": "^26",
     "cf": "1.0.0-beta.14",
     "typescript": "^7.0.2",
     "typescript-language-server": "^6.0.2",
@@ -30,7 +31,8 @@
     "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
   },
   "engines": {
-    "bun": ">=1.4.3"
+    "bun": ">=1.4.3",
+    "node": ">=22.18.0"
   },
   "packageManager": "bun@1.4.3"
 }
