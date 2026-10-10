@@ -5,7 +5,12 @@ export interface SitePage {
   /** URL path, e.g. "/" or "/now/" */
   path: string;
   updated?: Date;
+  /** One-line summary, e.g. the page's first heading. */
+  summary?: string;
 }
+
+/** Path of the markdown copy of a page: "/" -> "/index.md", "/now/" -> "/now/index.md". */
+export const markdownPath = (path: string) => `${path}index.md`;
 
 function escapeXml(value: string): string {
   return value
@@ -51,6 +56,32 @@ export function buildRss(pages: SitePage[]): string {
 ${items}
   </channel>
 </rss>
+`;
+}
+
+// https://llmstxt.org/
+export function buildLlmsTxt(pages: SitePage[]): string {
+  const links = pages
+    .map((page) => {
+      const summary = page.summary ? `: ${page.summary}` : "";
+      const label = page.path === "/" ? "Home" : page.title;
+      return `- [${label}](${absoluteUrl(markdownPath(page.path))})${summary}`;
+    })
+    .join("\n");
+  return `# ${SITE_CONFIG.title}
+
+> ${SITE_CONFIG.description}
+
+Personal site of Simon Gagnon. Every page is also available as Markdown at \`<page>/index.md\`.
+
+## Pages
+
+${links}
+
+## Optional
+
+- [Sitemap](${SITE_CONFIG.url}/sitemap.xml)
+- [RSS feed](${SITE_CONFIG.url}/index.xml)
 `;
 }
 

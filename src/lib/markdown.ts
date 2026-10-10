@@ -6,6 +6,8 @@ export interface ParsedMarkdown {
   html: string;
   /** From an "*Updated on Month DD, YYYY*" line, if present. */
   updated?: Date;
+  /** Text of the first heading, without markdown or HTML. */
+  heading?: string;
 }
 
 function titleFromFilename(filePath: string): string {
@@ -21,6 +23,14 @@ function updatedDate(content: string): Date | undefined {
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
+function firstHeading(content: string): string | undefined {
+  const match = content.match(/^#{1,6}\s+(.+)$/m);
+  return match?.[1]
+    ?.replace(/<[^>]+>/g, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .trim();
+}
+
 export async function parseMarkdown(filePath: string): Promise<ParsedMarkdown> {
   const file = Bun.file(filePath);
   const content = await file.text();
@@ -33,5 +43,6 @@ export async function parseMarkdown(filePath: string): Promise<ParsedMarkdown> {
     content,
     html,
     updated: updatedDate(content),
+    heading: firstHeading(content),
   };
 }

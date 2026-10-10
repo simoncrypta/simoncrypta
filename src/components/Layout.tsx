@@ -11,6 +11,8 @@ interface LayoutProps {
   currentPath?: string;
   image?: string;
   isArticle?: boolean;
+  /** Path of this page's markdown copy, for agents. */
+  markdownPath?: string;
 }
 
 export function Layout({
@@ -20,6 +22,7 @@ export function Layout({
   currentPath = "/",
   image,
   isArticle = false,
+  markdownPath,
 }: LayoutProps) {
   return (
     <html lang="en-US">
@@ -43,6 +46,9 @@ export function Layout({
           title={SITE_CONFIG.title}
           href="/index.xml"
         />
+        {markdownPath && (
+          <link rel="alternate" type="text/markdown" href={markdownPath} />
+        )}
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
