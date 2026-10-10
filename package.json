@@ -9,9 +9,10 @@
     "preview:worker": "astro build && node scripts/worker-preview.ts",
     "check": "astro sync && vp check",
     "fix": "astro sync && vp check --fix",
-    "deploy:check": "bun run build && cf deploy --dry-run",
-    "deploy": "bun run build && cf deploy",
-    "preview:upload": "bun run build && cf workers versions create"
+    "build:worker": "astro build && cf-wrangler build",
+    "deploy:check": "bun run build:worker && cf deploy --prebuilt --dry-run",
+    "deploy": "bun run build:worker && cf deploy --prebuilt",
+    "preview:upload": "bun run build:worker && cf previews deploy --prebuilt"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",

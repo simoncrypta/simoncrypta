@@ -7,7 +7,8 @@
 - `bun run preview:worker` - Build, then serve `dist/` through the real Worker + assets (`scripts/worker-preview.ts`, needs Node)
 - `bun run check` - Generate Astro types (`astro sync`), then format, lint and type check with Vite+ (`vp check`: oxfmt, type-aware oxlint, tsgo). `.astro` files are not type-checked (`astro check` doesn't support TypeScript 7 yet)
 - `bun run fix` - Apply formatting and lint fixes (`vp check --fix`)
-- `bun run deploy:check` - Build + `cf deploy --dry-run` (never uploads)
+- `bun run build:worker` - `astro build` + `cf-wrangler build`: full Cloudflare build output in `.cloudflare/output/` (`cf build` alone fails: it expects an Astro adapter)
+- `bun run deploy:check` - `build:worker` + `cf deploy --prebuilt --dry-run` (never uploads)
 - The build also emits `robots.txt` (with Content-Signal), `sitemap.xml`, the RSS feed `index.xml`, `llms.txt` and a Markdown copy of each page (`<page>/index.md`), from endpoints in `src/pages/` using `src/lib/feeds.ts`
 
 ## Cloudflare

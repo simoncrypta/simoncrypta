@@ -77,7 +77,7 @@ curl -H "Accept: text/markdown" http://localhost:8787/now/
 ```bash
 bun run check         # vp check: oxfmt + oxlint (type-aware) + type checks
 bun run fix           # vp check --fix
-bun run deploy:check  # build + cf deploy --dry-run (validates, uploads nothing)
+bun run deploy:check  # build:worker + cf deploy --prebuilt --dry-run (validates, uploads nothing)
 ```
 
 ## Deployment
@@ -87,20 +87,20 @@ bun run deploy:check  # build + cf deploy --dry-run (validates, uploads nothing)
 Workers Builds settings (**Worker → Settings → Builds**):
 
 - **Repository**: `simoncrypta/simoncrypta`, production branch `Main`
-- **Build command**: `bun run build`
-- **Deploy command**: `bunx cf deploy`
-- **Non-production branch deploy command**: `bunx cf workers versions create`
+- **Build command**: `npm run build && npx cf-wrangler build`
+- **Deploy command**: `npx cf deploy --prebuilt`
+- **Preview (non-production branch) deploy command**: `npx cf previews deploy --prebuilt`
 - **Builds for non-production branches**: enabled (preview URLs)
 - **Build variables**: `BUN_VERSION=1.4.3`, to match `packageManager` in `package.json`, and `NODE_VERSION=24` (Astro and Vite+ need Node 22.18+)
 
-`cf deploy` runs `astro build` itself (cf detects Astro), so the build command is only there to fail fast.
+Why the two-step build: when `cf` detects Astro, `cf build`/`cf deploy` hand the whole build to `astro build` and expect Astro's Cloudflare adapter to write the Build Output Specification (`.cloudflare/output/`). This site has no adapter, so we build with Astro, then run `cf-wrangler build` (Wrangler's cf bundler, the step `cf` uses for non-framework projects) to bundle `src/worker.ts` and the assets. `--prebuilt` deploys that output without rebuilding. `npm run`/`npx` keep the commands package-manager agnostic.
 
 ### Manual
 
 ```bash
 cf auth login
-bun run deploy          # build + cf deploy (production)
-bun run preview:upload  # build + upload a version with a preview URL, no deploy
+bun run deploy          # build:worker + cf deploy --prebuilt (production)
+bun run preview:upload  # build:worker + cf previews deploy --prebuilt (preview URL, not production)
 ```
 
 ## Redirects: `www` → `simoncrypta.dev`
