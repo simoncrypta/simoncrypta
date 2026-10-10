@@ -24,6 +24,7 @@ Output in `dist/`:
 | --- | --- |
 | `cloudflare.config.ts` | cf project config: Worker name, compatibility date, custom domain, workers.dev, preview URLs, asset routing |
 | `wrangler.config.ts` | Build settings that cf hands to its Wrangler bundler (`assetsDirectory: ./dist`) |
+| `cloudflare/redirect-rules.json` | Zone Redirect Rules (`www` → apex), applied with `cf rulesets` |
 | `package.json` | Build, preview and deploy scripts |
 
 Behaviour carried over from Pages:
@@ -72,6 +73,24 @@ bun run deploy          # build + cf deploy (production)
 bun run preview:upload  # build + upload a version with a preview URL, no deploy
 ```
 
+## Redirects: `www` → `simoncrypta.dev`
+
+`www.simoncrypta.dev` 301-redirects to `https://simoncrypta.dev`, keeping the path and query string. It's a zone-level **Redirect Rule**: Workers static assets `_redirects` can only match paths, not hostnames. The rule runs at Cloudflare's edge before the Worker or Pages. It works with either and doesn't depend on the cutover.
+
+The rule is in `cloudflare/redirect-rules.json`. To apply it, or re-apply after editing:
+
+```bash
+# Validate on Cloudflare without saving
+cf rulesets entrypoint update http_request_dynamic_redirect -z simoncrypta.dev \
+  --body "$(cat cloudflare/redirect-rules.json)" --validate-only
+
+# Apply. This replaces ALL redirect rules in the zone with this file.
+cf rulesets entrypoint update http_request_dynamic_redirect -z simoncrypta.dev \
+  --body "$(cat cloudflare/redirect-rules.json)"
+```
+
+This needs the proxied (orange-cloud) `www` DNS record, which already exists.
+
 ## Cutover from Pages (one-time)
 
 Do this once, in order. Until step 4, Pages keeps serving the site.
@@ -89,7 +108,7 @@ Doing step 1 just before step 4 keeps downtime to a few seconds while the domain
 - **Build fails**: run `bun run build` locally and check the output.
 - **`cf build` warns about the Docker socket**: harmless. It's the containers check, and this project has no containers.
 - **Deploy fails on the custom domain**: the domain is probably still attached to the Pages project (cutover step 1).
-- **`www.simoncrypta.dev` returns 522**: this predates the migration. It has a DNS record but no origin. Add it to `domains`, or redirect it to the apex domain with a Redirect Rule.
+- **`www.simoncrypta.dev` returns 522**: the redirect rule isn't applied. See [Redirects](#redirects-www--simoncryptadev).
 
 ## Additional resources
 
