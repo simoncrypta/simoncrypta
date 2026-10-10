@@ -1,0 +1,6 @@
+# Discovery links for agents (RFC 8288). Page-specific Markdown links are
+# added by src/worker.ts.
+/*
+  Link: </sitemap.xml>; rel="sitemap"; type="application/xml"
+  Link: </llms.txt>; rel="describedby"; type="text/plain"
+  Link: </index.xml>; rel="alternate"; type="application/rss+xml"

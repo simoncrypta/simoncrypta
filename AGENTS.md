@@ -12,6 +12,7 @@
 ## Cloudflare
 - Use the `cf` CLI, not `wrangler` (wrangler stays installed only as cf's bundler)
 - Hosting: Cloudflare Worker with static assets (migrated from Pages), deployed by Workers Builds
+- `src/worker.ts` runs before assets: serves `<page>/index.md` for `Accept: text/markdown`, adds `Vary`/`Link`
 - Config: `cloudflare.config.ts` (Worker + static assets) and `wrangler.config.ts` (assets directory)
 - Never run `bun run deploy`, `cf deploy` or `bun run preview:upload` unless asked
 - Discover commands with `cf cli search "<task>"`; see DEPLOY.md
