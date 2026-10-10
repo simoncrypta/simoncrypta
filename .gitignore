@@ -11,3 +11,6 @@ node_modules/
 # Temporary files
 tmp/
 .DS_Store
+
+# beads lock file
+.beads.gate.lock
