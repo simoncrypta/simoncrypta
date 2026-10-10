@@ -4,8 +4,8 @@
  *
  * `cf dev` delegates to `astro dev` for Astro projects, which skips the
  * Worker, so this converts cloudflare.config.ts to a throwaway Wrangler
- * config and runs `wrangler dev` with it. Needs Node (the config loader
- * refuses Bun): `node scripts/worker-preview.ts [wrangler dev args]`.
+ * config and runs `wrangler dev` with it:
+ * `node scripts/worker-preview.ts [wrangler dev args]`.
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";

@@ -2,13 +2,13 @@
 
 ## Build Commands
 
-- `bun run dev` - Astro dev server on :4321 (runs as a background daemon without a TTY; stop with `bunx astro dev stop`)
-- `bun run build` - `astro build`: static site to `dist/`
-- `bun run preview:worker` - Build, then serve `dist/` through the real Worker + assets (`scripts/worker-preview.ts`, needs Node)
-- `bun run check` - Generate Astro types (`astro sync`), then format, lint and type check with Vite+ (`vp check`: oxfmt, type-aware oxlint, tsgo). `.astro` files are not type-checked (`astro check` doesn't support TypeScript 7 yet)
-- `bun run fix` - Apply formatting and lint fixes (`vp check --fix`)
-- `bun run build:worker` - `astro build` + `cf-wrangler build`: full Cloudflare build output in `.cloudflare/output/` (`cf build` alone fails: it expects an Astro adapter)
-- `bun run deploy:check` - `build:worker` + `cf deploy --prebuilt --dry-run` (never uploads)
+- `pnpm dev` - Astro dev server on :4321 (runs as a background daemon without a TTY; stop with `pnpm exec astro dev stop`)
+- `pnpm build` - `astro build`: static site to `dist/`
+- `pnpm preview:worker` - Build, then serve `dist/` through the real Worker + assets (`scripts/worker-preview.ts`)
+- `pnpm check` - Generate Astro types (`astro sync`), then format, lint and type check with Vite+ (`vp check`: oxfmt, type-aware oxlint, tsgo). `.astro` files are not type-checked (`astro check` doesn't support TypeScript 7 yet)
+- `pnpm fix` - Apply formatting and lint fixes (`vp check --fix`)
+- `pnpm build:worker` - `astro build` + `cf-wrangler build`: full Cloudflare build output in `.cloudflare/output/` (`cf build` alone fails: it expects an Astro adapter)
+- `pnpm deploy:check` - `build:worker` + `cf deploy --prebuilt --dry-run` (never uploads)
 - The build also emits `robots.txt` (with Content-Signal), `sitemap.xml`, the RSS feed `index.xml`, `llms.txt` and a Markdown copy of each page (`<page>/index.md`), from endpoints in `src/pages/` using `src/lib/feeds.ts`
 
 ## Cloudflare
@@ -17,14 +17,16 @@
 - Hosting: Cloudflare Worker with static assets (migrated from Pages), deployed by Workers Builds
 - `src/worker.ts` runs before assets: serves `<page>/index.md` for `Accept: text/markdown`, adds `Vary`/`Link`
 - Config: `cloudflare.config.ts` (Worker + static assets) and `wrangler.config.ts` (assets directory)
-- Never run `bun run deploy`, `cf deploy` or `bun run preview:upload` unless asked
+- Never run `pnpm run deploy`, `cf deploy` or `pnpm preview:upload` unless asked
 - Discover commands with `cf cli search "<task>"`; see DEPLOY.md
 
 ## Toolchain
 
+- Node 26 (pinned in `.node-version`) and pnpm (`packageManager`), both managed by Vite+ (`vp env`, `vp install`)
+- `pnpm-workspace.yaml`: the `vite` → Vite+ core override, allowed install scripts (esbuild, workerd)
 - Astro 7 (`astro.config.ts`), static output, running on Vite+ core (`vite` is aliased to `@voidzero-dev/vite-plus-core`)
-- Vite+ (`vite-plus`, config in `vite.config.ts`) for check/lint/fmt; Bun is the package manager
-- `cf dev` delegates to `astro dev` (no Worker); use `bun run preview:worker` to test the Worker
+- Vite+ (`vite-plus`, config in `vite.config.ts`) for check/lint/fmt
+- `cf dev` delegates to `astro dev` (no Worker); use `pnpm preview:worker` to test the Worker
 - `content/` is excluded from formatting (authored prose)
 
 ## Code Style Guidelines
@@ -68,4 +70,4 @@
 
 - TypeScript will catch type errors
 - `astro build` fails on errors
-- Check `bun run build` output for issues
+- Check `pnpm build` output for issues

@@ -9,7 +9,7 @@ Cloudflare tooling uses the [`cf` CLI](https://developers.cloudflare.com/cf/), w
 ## Build
 
 ```bash
-bun run build
+pnpm build
 ```
 
 Output in `dist/`:
@@ -62,11 +62,11 @@ Only page requests run the Worker: `runWorkerFirst: ["/*", "!/*.*"]` matches eve
 ## Local development
 
 ```bash
-bun run dev             # astro dev on :4321 (fast reload, no Worker)
-bun run preview:worker  # astro build, then serve dist/ through the real Worker + assets (wrangler dev, :8787)
+pnpm dev             # astro dev on :4321 (fast reload, no Worker)
+pnpm preview:worker  # astro build, then serve dist/ through the real Worker + assets (wrangler dev, :8787)
 ```
 
-`cf dev` detects Astro and delegates to `astro dev`, which doesn't run `src/worker.ts`. `preview:worker` converts `cloudflare.config.ts` to a throwaway Wrangler config (`.cloudflare/wrangler.preview.json`) so Markdown negotiation and headers behave as in production. It needs Node, because the config loader doesn't support Bun.
+`cf dev` detects Astro and delegates to `astro dev`, which doesn't run `src/worker.ts`. `preview:worker` converts `cloudflare.config.ts` to a throwaway Wrangler config (`.cloudflare/wrangler.preview.json`) so Markdown negotiation and headers behave as in production.
 
 ```bash
 curl -H "Accept: text/markdown" http://localhost:8787/now/
@@ -75,9 +75,9 @@ curl -H "Accept: text/markdown" http://localhost:8787/now/
 ## Checks
 
 ```bash
-bun run check         # vp check: oxfmt + oxlint (type-aware) + type checks
-bun run fix           # vp check --fix
-bun run deploy:check  # build:worker + cf deploy --prebuilt --dry-run (validates, uploads nothing)
+pnpm check         # vp check: oxfmt + oxlint (type-aware) + type checks
+pnpm fix           # vp check --fix
+pnpm deploy:check     # build:worker + cf deploy --prebuilt --dry-run (validates, uploads nothing)
 ```
 
 ## Deployment
@@ -92,7 +92,7 @@ Workers Builds settings (**Worker → Settings → Builds**):
 - **Deploy command**: `npx cf deploy --prebuilt`
 - **Preview (non-production branch) deploy command**: `npx cf previews deploy --prebuilt`
 - **Builds for non-production branches**: enabled (preview URLs)
-- **Build variables**: `BUN_VERSION=1.4.3`, to match `packageManager` in `package.json`, and `NODE_VERSION=24` (Astro and Vite+ need Node 22.18+)
+- **Node and pnpm**: Workers Builds reads Node from `.node-version` (26) and the pnpm version from `packageManager`. Set `NODE_VERSION=26` as a build variable if it doesn't.
 
 Why the two-step build: when `cf` detects Astro, `cf build`/`cf deploy` hand the whole build to `astro build` and expect Astro's Cloudflare adapter to write the Build Output Specification (`.cloudflare/output/`). This site has no adapter, so we build with Astro, then run `cf-wrangler build` (Wrangler's cf bundler, the step `cf` uses for non-framework projects) to bundle `src/worker.ts` and the assets. `--prebuilt` deploys that output without rebuilding. `npm run`/`npx` keep the commands package-manager agnostic.
 
@@ -100,8 +100,8 @@ Why the two-step build: when `cf` detects Astro, `cf build`/`cf deploy` hand the
 
 ```bash
 cf auth login
-bun run deploy          # build:worker + cf deploy --prebuilt (production)
-bun run preview:upload  # build:worker + cf previews deploy --prebuilt (preview URL, not production)
+pnpm run deploy         # build:worker + cf deploy --prebuilt (production)
+pnpm preview:upload     # build:worker + cf previews deploy --prebuilt (preview URL, not production)
 ```
 
 ## Redirects: `www` → `simoncrypta.dev`
@@ -129,14 +129,14 @@ Do this once, in order. Until step 4, Pages keeps serving the site.
 1. **Remove the custom domain from the Pages project.** Go to Pages → `simoncrypta` → Custom domains and remove `simoncrypta.dev`. The Worker deploy attaches the domain itself, and it conflicts if Pages still holds it.
 2. **Disable automatic deployments on the Pages project** (Settings → Builds), to avoid double deploys.
 3. **Connect Workers Builds** with the settings above. Set a personalized `workers.dev` subdomain in the dashboard if you don't have one yet.
-4. **Deploy.** Push to `Main`, or run `bun run deploy`. Then check `https://simoncrypta.dev` and the workers.dev URL.
+4. **Deploy.** Push to `Main`, or run `pnpm run deploy`. Then check `https://simoncrypta.dev` and the workers.dev URL.
 5. **Delete the Pages project** once the Worker has served traffic for a while.
 
 Doing step 1 just before step 4 keeps downtime to a few seconds while the domain moves.
 
 ## Troubleshooting
 
-- **Build fails**: run `bun run build` locally and check the output.
+- **Build fails**: run `pnpm build` locally and check the output.
 - **`cf build` warns about the Docker socket**: harmless. It's the containers check, and this project has no containers.
 - **Deploy fails on the custom domain**: the domain is probably still attached to the Pages project (cutover step 1).
 - **`www.simoncrypta.dev` returns 522**: the redirect rule isn't applied. See [Redirects](#redirects-www--simoncryptadev).
@@ -147,4 +147,5 @@ Doing step 1 just before step 4 keeps downtime to a few seconds while the domain
 - [Migrating from Wrangler to cf](https://developers.cloudflare.com/cf/wrangler/migrate/)
 - [Migrate from Pages to Workers](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/)
 - [Workers static assets](https://developers.cloudflare.com/workers/static-assets/)
-- [Bun documentation](https://bun.sh/docs)
+- [Astro documentation](https://docs.astro.build/)
+- [Vite+ guide](https://viteplus.dev/guide/)
