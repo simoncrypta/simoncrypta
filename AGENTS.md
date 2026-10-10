@@ -23,8 +23,8 @@
 ## Toolchain
 
 - Node 26 (pinned in `.node-version`) and pnpm (`packageManager`), both managed by Vite+ (`vp env`, `vp install`)
-- `pnpm-workspace.yaml`: the `vite` → Vite+ core override, allowed install scripts (esbuild, workerd)
-- Astro 7 (`astro.config.ts`), static output, running on Vite+ core (`vite` is aliased to `@voidzero-dev/vite-plus-core`)
+- `pnpm-workspace.yaml`: allowed install scripts (esbuild, workerd)
+- Astro 7 (`astro.config.ts`), static output, on its own Vite 8 (Vite+ is only used for check/lint/fmt)
 - Vite+ (`vite-plus`, config in `vite.config.ts`) for check/lint/fmt
 - `cf dev` delegates to `astro dev` (no Worker); use `pnpm preview:worker` to test the Worker
 - `content/` is excluded from formatting (authored prose)
