@@ -1,4 +1,9 @@
 ---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
 const links = [
   { href: "/", label: "About" },
   { href: "/now/", label: "Now" },
@@ -6,32 +11,30 @@ const links = [
 ];
 ---
 
-<header>
+<header
+  class="mb-12 flex items-center justify-between gap-4 mobile:mb-8 mobile:flex-col mobile:items-start mobile:gap-3"
+>
   <a
     href="/"
-    class="font-display text-[xx-large] font-normal text-accent not-italic no-underline mobile:text-[x-large]"
+    class="inline-flex min-h-11 items-center font-display text-4xl leading-none font-normal text-fg no-underline hover:text-accent mobile:text-[2rem]"
   >
-    <h2>Simon's Crypta</h2>
+    Simon's Crypta
   </a>
-  <nav class="mb-4">
+  <nav aria-label="Primary" class="flex gap-6 text-lg mobile:gap-5">
     {
-      links.map(({ href, label }, i) => (
-        <>
-          {i > 0 && (
-            <span
-              class="mx-2 inline-block text-fg opacity-50 mobile:mx-[0.4rem]"
-              aria-hidden="true"
-            >
-              ·
-            </span>
-          )}
-          <a
-            href={href}
-            class="inline-block px-5 py-3 text-[1.5rem] mobile:px-4 mobile:py-[0.6rem] mobile:text-[1.25rem]"
-          >
-            {label}
-          </a>
-        </>
+      links.map(({ href, label }) => (
+        <a
+          href={href}
+          aria-current={currentPath === href ? "page" : undefined}
+          class:list={[
+            "inline-flex min-h-11 items-center hover:text-link hover:underline",
+            currentPath === href
+              ? "font-semibold text-fg decoration-accent decoration-2 underline-offset-8"
+              : "text-muted no-underline",
+          ]}
+        >
+          {label}
+        </a>
       ))
     }
   </nav>
