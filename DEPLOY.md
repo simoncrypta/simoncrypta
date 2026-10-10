@@ -26,7 +26,9 @@ Output in `dist/`:
 
 | File | Purpose |
 | --- | --- |
-| `cloudflare.config.ts` | cf project config: Worker name, compatibility date, custom domain, workers.dev, preview URLs, asset routing |
+| `cloudflare.config.ts` | cf project config: Worker name, compatibility date, entrypoint + `ASSETS` binding, custom domain, workers.dev, preview URLs, asset routing |
+| `src/worker.ts` | Small Worker that runs before assets: Markdown content negotiation, `Vary`/`Link` headers |
+| `static/_headers` | Site-wide `Link` headers (sitemap, llms.txt, RSS), copied to `dist/` |
 | `wrangler.config.ts` | Build settings that cf hands to its Wrangler bundler (`assetsDirectory: ./dist`) |
 | `cloudflare/redirect-rules.json` | Zone Redirect Rules (`www` → apex), applied with `cf rulesets` |
 | `package.json` | Build, preview and deploy scripts |
@@ -41,6 +43,15 @@ Behaviour carried over from Pages:
 | `simoncrypta.pages.dev` | `workersDev: true` → `simoncrypta.<subdomain>.workers.dev` |
 | Preview deployments | `previewUrls: true` + Workers Builds preview builds |
 | Custom domain on the Pages project | `domains: ["simoncrypta.dev"]` |
+
+### Markdown for agents
+A request for a page with `Accept: text/markdown` (preferred over `text/html`) gets the page's Markdown copy (`<page>/index.md`) instead of HTML. Browsers are unaffected. HTML responses carry `Vary: Accept` and a `Link: <…/index.md>; rel="alternate"; type="text/markdown"` header.
+
+```bash
+curl -H "Accept: text/markdown" https://simoncrypta.dev/now/
+```
+
+Because `runWorkerFirst: true`, every request invokes the Worker, including CSS and images, which it passes straight to assets. That's far inside the Workers free tier (100k requests/day). Cloudflare's zone-level "Markdown for Agents" feature is the no-Worker alternative, but it converts HTML instead of serving our Markdown source.
 
 `cf build` / `cf dev` generate `.cloudflare/` (build output and types). It's gitignored.
 

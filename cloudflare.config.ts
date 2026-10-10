@@ -1,11 +1,16 @@
-import { defineConfig } from "cf/config";
+import { bindings, defineConfig } from "cf/config";
 
 // Static site served by Workers static assets (migrated from Cloudflare Pages).
-// The assets directory is set in wrangler.config.ts.
+// The assets directory is set in wrangler.config.ts. A small Worker runs first
+// to serve Markdown to agents that ask for it (src/worker.ts).
 export default defineConfig((ctx) => ({
   worker: {
     name: "simoncrypta",
     compatibilityDate: "2026-10-10",
+    entrypoint: "./src/worker.ts",
+    env: {
+      ASSETS: bindings.assets(),
+    },
     // Preview uploads can't claim the custom domain.
     domains: ctx.isPreview ? undefined : ["simoncrypta.dev"],
     // simoncrypta.<subdomain>.workers.dev replaces simoncrypta.pages.dev.
@@ -17,6 +22,8 @@ export default defineConfig((ctx) => ({
       // and unknown paths get dist/404.html with a 404 status.
       htmlHandling: "auto-trailing-slash",
       notFoundHandling: "404-page",
+      // Every request goes through the Worker (Accept negotiation, headers).
+      runWorkerFirst: true,
     },
   },
 }));
