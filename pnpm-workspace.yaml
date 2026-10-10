@@ -1,0 +1,13 @@
+# Dependencies allowed to run install scripts (pnpm blocks them by default).
+allowBuilds:
+  esbuild: true
+  workerd: true
+
+# Run Astro (and everything else) on Vite+ core instead of plain Vite.
+overrides:
+  vite: "npm:@voidzero-dev/vite-plus-core@1.1.0"
+
+# vite-plus-core reports its own version (1.1.0), not a Vite version.
+peerDependencyRules:
+  allowAny:
+    - vite
