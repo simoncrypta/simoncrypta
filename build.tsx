@@ -2,7 +2,7 @@
 
 /**
  * Build Script for Simon's Crypta SSG
- * 
+ *
  * Phases:
  * 1. Clean dist directory
  * 2. Copy static assets
@@ -10,14 +10,13 @@
  * 4. Generate pages (placeholder - implemented in Task 7)
  */
 
-import { rmSync, mkdirSync, cpSync, existsSync, readdirSync } from "fs";
-import { join } from "path";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
+import { join } from "node:path";
 import { Layout } from "./src/components/Layout";
-import { Page } from "./src/components/Page";
 import { NotFound } from "./src/components/NotFound";
-import { parseMarkdown } from "./src/lib/markdown";
+import { Page } from "./src/components/Page";
 import { SITE_CONFIG } from "./src/config";
-
+import { parseMarkdown } from "./src/lib/markdown";
 
 const DIST_DIR = "dist";
 const STATIC_DIR = "static";
@@ -26,24 +25,26 @@ const CSS_INPUT = "src/styles/global.css";
 const CSS_OUTPUT = "dist/styles.css";
 
 async function generatePages() {
-  const contentFiles = readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
-  
+  const contentFiles = readdirSync(CONTENT_DIR).filter((f) =>
+    f.endsWith(".md"),
+  );
+
   for (const file of contentFiles) {
     const filePath = join(CONTENT_DIR, file);
     const parsed = await parseMarkdown(filePath);
-    
-    const isIndexFile = file === 'index.md';
-    const slug = file.replace('.md', '');
-    const outputPath = isIndexFile 
-      ? join(DIST_DIR, 'index.html')
-      : join(DIST_DIR, slug, 'index.html');
-    
-    const urlPath = isIndexFile ? '/' : `/${slug}/`;
-    
+
+    const isIndexFile = file === "index.md";
+    const slug = file.replace(".md", "");
+    const outputPath = isIndexFile
+      ? join(DIST_DIR, "index.html")
+      : join(DIST_DIR, slug, "index.html");
+
+    const urlPath = isIndexFile ? "/" : `/${slug}/`;
+
     if (!isIndexFile) {
       mkdirSync(join(DIST_DIR, slug), { recursive: true });
     }
-    
+
     const html = (
       <Layout
         title={parsed.title}
@@ -53,27 +54,29 @@ async function generatePages() {
         <Page html={parsed.html} />
       </Layout>
     ) as string;
-    
+
     const fullHtml = `<!DOCTYPE html>\n${html}`;
     await Bun.write(outputPath, fullHtml);
-    
-    console.log(`   ✓ Generated ${file} → ${outputPath.replace(DIST_DIR + '/', '')}`);
+
+    console.log(
+      `   ✓ Generated ${file} → ${outputPath.replace(`${DIST_DIR}/`, "")}`,
+    );
   }
 }
 
 async function generate404Page() {
-   const html = (
-     <Layout
-       title="404 - Page Not Found"
-       description="Page not found"
-       currentPath="/404"
-     >
-       <NotFound />
-     </Layout>
-   ) as string;
-  
+  const html = (
+    <Layout
+      title="404 - Page Not Found"
+      description="Page not found"
+      currentPath="/404"
+    >
+      <NotFound />
+    </Layout>
+  ) as string;
+
   const fullHtml = `<!DOCTYPE html>\n${html}`;
-  await Bun.write(join(DIST_DIR, '404.html'), fullHtml);
+  await Bun.write(join(DIST_DIR, "404.html"), fullHtml);
   console.log(`   ✓ Generated 404 page → dist/404.html`);
 }
 
@@ -82,7 +85,7 @@ async function generateRobotsTxt() {
 Allow: /
 Sitemap: ${SITE_CONFIG.url}/sitemap.xml
 `;
-  await Bun.write(join(DIST_DIR, 'robots.txt'), robotsTxt);
+  await Bun.write(join(DIST_DIR, "robots.txt"), robotsTxt);
   console.log(`   ✓ Generated robots.txt → dist/robots.txt`);
 }
 
@@ -96,8 +99,8 @@ async function main() {
       rmSync(DIST_DIR, { recursive: true, force: true });
       console.log("   ✓ Removed existing dist/");
     }
-     mkdirSync(DIST_DIR, { recursive: true });
-     console.log("   ✓ Created fresh dist/\n");
+    mkdirSync(DIST_DIR, { recursive: true });
+    console.log("   ✓ Created fresh dist/\n");
 
     // Phase 2: Copy static assets
     console.log("📁 Phase 2: Copying static assets...");
@@ -116,12 +119,12 @@ async function main() {
 
     console.log(`   ✓ Copied ${CSS_INPUT} → ${CSS_OUTPUT}\n`);
 
-     // Phase 4: Generate pages
-     console.log("📄 Phase 4: Generating pages...");
-     await generatePages();
-     await generate404Page();
-     await generateRobotsTxt();
-     console.log("   ✓ Generated all pages\n");
+    // Phase 4: Generate pages
+    console.log("📄 Phase 4: Generating pages...");
+    await generatePages();
+    await generate404Page();
+    await generateRobotsTxt();
+    console.log("   ✓ Generated all pages\n");
 
     // Build complete
     console.log("✅ Build complete!\n");
@@ -130,7 +133,6 @@ async function main() {
     if (existsSync(STATIC_DIR)) {
       console.log(`   - Static assets: dist/`);
     }
-
   } catch (error) {
     console.error("\n❌ Build failed:");
     console.error(error instanceof Error ? error.message : String(error));

@@ -1,5 +1,5 @@
+import { join } from "node:path";
 import { serve } from "bun";
-import { join } from "path";
 
 const port = 3000;
 const distDir = join(import.meta.dir, "dist");
@@ -17,7 +17,7 @@ serve({
 
     try {
       const file = Bun.file(filePath);
-      
+
       if (!(await file.exists())) {
         return serve404Page();
       }
@@ -27,7 +27,7 @@ serve({
           "Content-Type": getContentType(filePath),
         },
       });
-    } catch (error) {
+    } catch (_error) {
       return new Response("Internal Server Error", { status: 500 });
     }
   },
@@ -61,7 +61,7 @@ async function serve404Page(): Promise<Response> {
 
 function getContentType(filePath: string): string {
   const ext = filePath.split(".").pop()?.toLowerCase();
-  
+
   const contentTypes: Record<string, string> = {
     html: "text/html; charset=utf-8",
     css: "text/css; charset=utf-8",

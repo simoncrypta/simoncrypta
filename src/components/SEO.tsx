@@ -1,4 +1,4 @@
-import { SITE_CONFIG } from '../config';
+import { SITE_CONFIG } from "../config";
 
 interface SEOProps {
   title?: string;
@@ -8,22 +8,25 @@ interface SEOProps {
   isArticle?: boolean;
 }
 
-export function SEO({ 
-  title, 
-  description, 
-  url, 
+export function SEO({
+  title,
+  description,
+  url,
   image,
-  isArticle = false 
+  isArticle = false,
 }: SEOProps) {
-
   const finalTitle = title
-    ? (title === SITE_CONFIG.title ? SITE_CONFIG.title : `${title} | ${SITE_CONFIG.title}`)
+    ? title === SITE_CONFIG.title
+      ? SITE_CONFIG.title
+      : `${title} | ${SITE_CONFIG.title}`
     : SITE_CONFIG.title;
   const finalDescription = description || SITE_CONFIG.description;
-  const finalImage = image 
-    ? (image.startsWith('http') ? image : `${SITE_CONFIG.url}${image}`) 
+  const finalImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${SITE_CONFIG.url}${image}`
     : `${SITE_CONFIG.url}${SITE_CONFIG.defaultImage}`;
-  const finalUrl = url.startsWith('http') ? url : `${SITE_CONFIG.url}${url}`;
+  const finalUrl = url.startsWith("http") ? url : `${SITE_CONFIG.url}${url}`;
 
   return (
     <>
