@@ -185,6 +185,9 @@ importers:
       cf:
         specifier: 1.0.0-beta.14
         version: 1.0.0-beta.14(@types/node@26.6.5)
+      dialkit:
+        specifier: 2.0.0
+        version: 2.0.0
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -1960,6 +1963,32 @@ packages:
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+
+  dialkit@2.0.0:
+    resolution: {integrity: sha512-22i7Vch9qdOhPhi1duFnfkR1DBG9h3cEHWC6NrelEwlsVyCHDeBKYz0MkLDqx2LREnmgONypKVVlwFqlJdGWVA==}
+    peerDependencies:
+      motion: '>=11.0.0'
+      motion-v: '>=2.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+      solid-js: '>=1.6.0'
+      svelte: '>=5.8.0'
+      vue: '>=3.3.0'
+    peerDependenciesMeta:
+      motion:
+        optional: true
+      motion-v:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
 
   diff@9.0.0:
     resolution: {integrity: sha512-svtcdpS8CgJyqAjEQIXdb3OjhFVVYjzGAPO8WGCmRbrml64SPw/jJD4GoE98aR7r25A0XcgrK3F02yw9R/vhQw==}
@@ -4188,6 +4217,8 @@ snapshots:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
+
+  dialkit@2.0.0: {}
 
   diff@9.0.0: {}
 

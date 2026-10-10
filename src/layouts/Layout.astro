@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
@@ -26,8 +27,9 @@ const {
 ---
 
 <!doctype html>
-<html lang="en-US">
+<html lang="en-US" transition:animate="none">
   <head>
+    <ClientRouter fallback="swap" />
     <SEO
       title={title}
       description={description}
@@ -63,5 +65,12 @@ const {
       <slot />
     </main>
     <Footer />
+    {import.meta.env.DEV && <div id="transition-tools" transition:persist="transition-tools" />}
+    <script>
+      import { setupPageTransitions } from "../lib/page-transitions";
+
+      const dispose = setupPageTransitions();
+      if (import.meta.hot) import.meta.hot.dispose(dispose);
+    </script>
   </body>
 </html>
