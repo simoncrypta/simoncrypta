@@ -6,6 +6,7 @@
 - `bun run typecheck` - Typecheck with TypeScript (`tsc --noEmit`)
 - `bun run lint` - Lint and format check with Biome (`bun run format` to fix)
 - `bun run cf:dev` - Build, then serve `dist/` with the Cloudflare `cf` CLI
+- Build also emits `robots.txt` (with Content-Signal), `sitemap.xml` and the RSS feed `index.xml` (`src/lib/feeds.ts`)
 - `bun run deploy:check` - Build + `cf deploy --dry-run` (never uploads)
 
 ## Cloudflare
@@ -24,7 +25,7 @@
 - Store components in `src/components/`
 
 ### Styling
-- Use Tailwind CSS utility classes
+- Plain CSS (no Tailwind yet; planned in simoncrypta-kti.6)
 - Custom styles in `src/styles/global.css`
 - Dark/light theme via `prefers-color-scheme` (no manual toggle)
 - Color scheme: light (#f2f2f2 bg), dark (#1b1d36 bg)

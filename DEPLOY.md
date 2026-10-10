@@ -14,7 +14,9 @@ bun run build
 Output in `dist/`:
 - `index.html`, `now/index.html`, `uses/index.html` - pages
 - `404.html` - custom 404 page
-- `robots.txt` - SEO robots configuration
+- `robots.txt` - crawl rules, AI `Content-Signal` and the sitemap location
+- `sitemap.xml` - all pages, with `lastmod` from each page's "Updated on" line
+- `index.xml` - RSS 2.0 feed
 - `styles.css` - site CSS
 - `image.png` - static assets
 

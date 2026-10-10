@@ -6,8 +6,8 @@
  * Phases:
  * 1. Clean dist directory
  * 2. Copy static assets
- * 3. Build CSS with Tailwind
- * 4. Generate pages (placeholder - implemented in Task 7)
+ * 3. Copy CSS
+ * 4. Generate pages, 404, robots.txt, sitemap.xml and RSS
  */
 
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
@@ -15,7 +15,12 @@ import { join } from "node:path";
 import { Layout } from "./src/components/Layout";
 import { NotFound } from "./src/components/NotFound";
 import { Page } from "./src/components/Page";
-import { SITE_CONFIG } from "./src/config";
+import {
+  buildRobotsTxt,
+  buildRss,
+  buildSitemap,
+  type SitePage,
+} from "./src/lib/feeds";
 import { parseMarkdown } from "./src/lib/markdown";
 
 const DIST_DIR = "dist";
@@ -24,10 +29,14 @@ const CONTENT_DIR = "content";
 const CSS_INPUT = "src/styles/global.css";
 const CSS_OUTPUT = "dist/styles.css";
 
-async function generatePages() {
-  const contentFiles = readdirSync(CONTENT_DIR).filter((f) =>
-    f.endsWith(".md"),
-  );
+async function generatePages(): Promise<SitePage[]> {
+  const pages: SitePage[] = [];
+  // Stable order (home first, then by name) for the sitemap and RSS feed.
+  const contentFiles = readdirSync(CONTENT_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .sort((a, b) =>
+      a === "index.md" ? -1 : b === "index.md" ? 1 : a.localeCompare(b),
+    );
 
   for (const file of contentFiles) {
     const filePath = join(CONTENT_DIR, file);
@@ -40,6 +49,7 @@ async function generatePages() {
       : join(DIST_DIR, slug, "index.html");
 
     const urlPath = isIndexFile ? "/" : `/${slug}/`;
+    pages.push({ title: parsed.title, path: urlPath, updated: parsed.updated });
 
     if (!isIndexFile) {
       mkdirSync(join(DIST_DIR, slug), { recursive: true });
@@ -62,6 +72,8 @@ async function generatePages() {
       `   ✓ Generated ${file} → ${outputPath.replace(`${DIST_DIR}/`, "")}`,
     );
   }
+
+  return pages;
 }
 
 async function generate404Page() {
@@ -80,13 +92,11 @@ async function generate404Page() {
   console.log(`   ✓ Generated 404 page → dist/404.html`);
 }
 
-async function generateRobotsTxt() {
-  const robotsTxt = `User-agent: *
-Allow: /
-Sitemap: ${SITE_CONFIG.url}/sitemap.xml
-`;
-  await Bun.write(join(DIST_DIR, "robots.txt"), robotsTxt);
-  console.log(`   ✓ Generated robots.txt → dist/robots.txt`);
+async function generateFeeds(pages: SitePage[]) {
+  await Bun.write(join(DIST_DIR, "robots.txt"), buildRobotsTxt());
+  await Bun.write(join(DIST_DIR, "sitemap.xml"), buildSitemap(pages));
+  await Bun.write(join(DIST_DIR, "index.xml"), buildRss(pages));
+  console.log(`   ✓ Generated robots.txt, sitemap.xml, index.xml (RSS)`);
 }
 
 async function main() {
@@ -121,9 +131,9 @@ async function main() {
 
     // Phase 4: Generate pages
     console.log("📄 Phase 4: Generating pages...");
-    await generatePages();
+    const pages = await generatePages();
     await generate404Page();
-    await generateRobotsTxt();
+    await generateFeeds(pages);
     console.log("   ✓ Generated all pages\n");
 
     // Build complete
