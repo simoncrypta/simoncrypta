@@ -4,12 +4,21 @@ export interface ParsedMarkdown {
   title: string;
   content: string;
   html: string;
+  /** From an "*Updated on Month DD, YYYY*" line, if present. */
+  updated?: Date;
 }
 
 function titleFromFilename(filePath: string): string {
   const filename = basename(filePath, ".md");
   if (filename === "index") return "Simon's Crypta";
   return filename.charAt(0).toUpperCase() + filename.slice(1);
+}
+
+function updatedDate(content: string): Date | undefined {
+  const match = content.match(/^\*Updated on (.+?)\*\s*$/m);
+  if (!match?.[1]) return undefined;
+  const date = new Date(`${match[1]} UTC`);
+  return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
 export async function parseMarkdown(filePath: string): Promise<ParsedMarkdown> {
@@ -23,5 +32,6 @@ export async function parseMarkdown(filePath: string): Promise<ParsedMarkdown> {
     title: titleFromFilename(filePath),
     content,
     html,
+    updated: updatedDate(content),
   };
 }
