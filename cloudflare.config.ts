@@ -2,11 +2,12 @@ import { defineConfig } from "cf/config";
 
 // Static site served by Workers static assets (migrated from Cloudflare Pages).
 // The assets directory is set in wrangler.config.ts.
-export default defineConfig({
+export default defineConfig((ctx) => ({
   worker: {
     name: "simoncrypta",
     compatibilityDate: "2026-10-10",
-    domains: ["simoncrypta.dev"],
+    // Preview uploads can't claim the custom domain.
+    domains: ctx.isPreview ? undefined : ["simoncrypta.dev"],
     // simoncrypta.<subdomain>.workers.dev replaces simoncrypta.pages.dev.
     workersDev: true,
     // Per-version and per-branch preview URLs, like Pages preview deployments.
@@ -18,4 +19,4 @@ export default defineConfig({
       notFoundHandling: "404-page",
     },
   },
-});
+}));
