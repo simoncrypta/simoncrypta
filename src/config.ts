@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
   title: "Simon's Crypta",
-  description: "Professional vibe coder sharing contexts and knowledge for every dimension",
+  description: "Agentic engineer working across design and code",
   url: "https://simoncrypta.dev",
-  defaultImage: "/images/og-image.png",
+  defaultImage: "/image.png",
   author: "simoncrypta",
 } as const;

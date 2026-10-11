@@ -176,6 +176,12 @@
       font-size: 0.875em;
     }
 
+    /* Footnote: a closing italic paragraph after a rule */
+    & > hr + p:last-child:has(> em:only-child) {
+      color: var(--color-muted);
+      font-size: 0.75em;
+    }
+
     & > :last-child {
       margin-bottom: 0;
     }
