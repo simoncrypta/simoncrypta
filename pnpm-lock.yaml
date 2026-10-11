@@ -188,6 +188,9 @@ importers:
       dialkit:
         specifier: 2.0.0
         version: 2.0.0
+      sharp:
+        specifier: 0.35.5
+        version: 0.35.5(@types/node@26.6.5)
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
