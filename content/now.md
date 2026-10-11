@@ -15,12 +15,7 @@ Only swimming for now.
 
 ## Reading
 
-Currently reading:
-
 - *The Wealth of Nations* by Adam Smith
-
-Paused:
-
 - *The Autobiography of Benjamin Franklin*
 - *Designing Data-Intensive Applications* by Martin Kleppmann
 - *The Design of Everyday Things* by Don Norman
