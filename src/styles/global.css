@@ -155,6 +155,15 @@
       line-height: 1.2;
       margin: 0 0 1.25rem;
     }
+    /* Second tier of a heading: "# Big line <small>quieter line</small>" */
+    & h1 small {
+      display: block;
+      margin-top: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.625rem);
+      line-height: 1.35;
+      color: var(--color-muted);
+    }
     & h2 {
       font-size: 1.35em;
       line-height: 1.3;
