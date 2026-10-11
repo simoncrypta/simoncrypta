@@ -59,6 +59,7 @@
 - Utilities: `src/lib/` (TypeScript)
 - Worker: `src/worker.ts`
 - Static assets: `static/` (copied to dist/)
+- Images processed at build time: `src/assets/`, rendered with `astro:assets` (`<Picture>`/`<Image>`), e.g. the home portrait
 - Build output: `dist/` (generated, not committed)
 
 ### Naming Conventions

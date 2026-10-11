@@ -24,6 +24,7 @@
     "@types/node": "^26.6.5",
     "cf": "1.0.0-beta.14",
     "dialkit": "2.0.0",
+    "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "typescript-language-server": "^6.0.2",

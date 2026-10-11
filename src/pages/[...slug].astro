@@ -1,5 +1,6 @@
 ---
 import { render } from "astro:content";
+import Portrait from "../components/Portrait.astro";
 import Layout from "../layouts/Layout.astro";
 import { markdownPath } from "../lib/feeds";
 import { type ContentPage, getContentPages } from "../lib/pages";
@@ -19,7 +20,8 @@ const { Content } = await render(page.entry);
   isArticle={page.slug !== undefined}
   markdownPath={markdownPath(page.path)}
 >
-  <content>
+  <content data-page={page.slug ?? "home"}>
+    {page.slug === undefined && <Portrait />}
     <Content />
   </content>
 </Layout>

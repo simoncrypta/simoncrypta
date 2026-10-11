@@ -1,0 +1,50 @@
+---
+import { Picture } from "astro:assets";
+// Swap this file to change the photo; Astro generates the AVIF/WebP sizes.
+import portrait from "../assets/portrait.jpg";
+
+const alt = "Simon Gagnon smiling, with curly dark hair and a moustache";
+---
+
+<figure
+  data-particle-portrait
+  class="group relative float-right m-0 mb-2 ml-8 aspect-square w-44 touch-pan-y [&~h1+p]:clear-right mobile:float-none mobile:mb-6 mobile:ml-0 mobile:w-40"
+>
+  <Picture
+    src={portrait}
+    alt={alt}
+    formats={["avif", "webp"]}
+    widths={[176, 352, 528]}
+    sizes="(max-width: 768px) 160px, 176px"
+    loading="eager"
+    decoding="async"
+    class="block size-full rounded-full object-cover transition-opacity duration-300 group-data-ready:opacity-0"
+  />
+  <canvas
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10 size-full opacity-0 transition-opacity duration-300 group-data-ready:opacity-100"
+  ></canvas>
+</figure>
+
+<script>
+  import { mountParticlePortrait } from "../lib/particle-portrait";
+
+  // Astro's ClientRouter keeps this module alive across navigations:
+  // mount on each page load, tear down before the document is swapped.
+  const mounted = new Map<HTMLElement, () => void>();
+
+  function mountAll() {
+    for (const figure of document.querySelectorAll<HTMLElement>("[data-particle-portrait]")) {
+      if (!mounted.has(figure)) mounted.set(figure, mountParticlePortrait(figure));
+    }
+  }
+
+  function unmountAll() {
+    for (const dispose of mounted.values()) dispose();
+    mounted.clear();
+  }
+
+  mountAll();
+  document.addEventListener("astro:page-load", mountAll);
+  document.addEventListener("astro:before-swap", unmountAll);
+</script>
