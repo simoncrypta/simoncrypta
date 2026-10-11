@@ -1,0 +1,27 @@
+---
+import { Picture } from "astro:assets";
+import type { PagePhoto } from "../lib/page-photos";
+
+type Props = PagePhoto;
+
+const { src, alt, layout } = Astro.props;
+const wide = layout === "wide";
+---
+
+<figure
+  class:list={[
+    "m-0 mobile:float-none mobile:mx-0 mobile:mb-6 mobile:w-full",
+    wide ? "mb-6" : "float-right mb-4 ml-8 w-[45%] [&~h2]:clear-both [&~hr]:clear-both",
+  ]}
+>
+  <Picture
+    src={src}
+    alt={alt}
+    formats={["avif", "webp"]}
+    widths={wide ? [400, 800, 1200, 1600] : [360, 720, 1080]}
+    sizes={wide ? "(max-width: 768px) calc(100vw - 48px), 752px" : "(max-width: 768px) calc(100vw - 48px), 340px"}
+    loading={wide ? "eager" : "lazy"}
+    decoding="async"
+    class="block h-auto w-full rounded-lg"
+  />
+</figure>
