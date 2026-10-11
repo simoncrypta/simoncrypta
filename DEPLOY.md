@@ -23,7 +23,7 @@ Output in `dist/`:
 - `llms.txt` - site summary for LLMs, linking the Markdown pages
 - `_astro/*.css` - site CSS (hashed file name)
 - `_headers` - site-wide `Link` headers
-- `image.png` - static assets
+- `og-voyager.jpg` - share image (`og:image`, `twitter:image`)
 
 ## Configuration files
 

@@ -1,44 +1,43 @@
 # A glimpse into my office
-*Updated on February 1, 2026*
+*Updated on October 11, 2026*
 
 ## On My Desk
 
 - Computer 1: AMD custom build running Omarchy
-- Inkbird CO2 Monitor
 - Samsung Odyssey Neo G9 monitor
 - Xiaomi Mi Monitor Light Bar
 - ONO Roller and Scroller fidget toys
-- ZSA Voyager keyboard 
-- Razer DeathAdder v2 Mouse
+- ZSA Voyager keyboard (Red Pro switches) with a ZSA Navigator trackball
 - Yamaha HS4 speaker system
 - JLab Talk Pro mic
 - OBSBOT Meet 2 camera
 - IKEA UPPSPEL desk
 - Branch Ergonomic Chair
 
-## On My Linux
+## On My Linux Machine
 
 - Zen Browser
 - Cursor
 - Linear
 - Figma
 - Slack
-- Warp Terminal
+- Foot Terminal with Herdr
+- Grok Bot
 
 ## On My iPhone
 
 - Readwise
-- BoldVoice
 - MyMind
-- Perplexity
 - YouTube Music
+- Grok
+- Pikmin Bloom
 
 ## Bonus: My coffee setup
 
 - Aeropress
 - Hario V60 Switch
-- Cafelat Robot
-- Comandante C40
+- Cafelat Robot manual espresso machine
+- Comandante C40 grinder
 - Subminimal NanoFoamer Pro Gen2
 
 ---

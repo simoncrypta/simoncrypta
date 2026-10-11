@@ -1,9 +1,10 @@
 ---
-import { render } from "astro:content";
+import PagePhoto from "../components/PagePhoto.astro";
 import Portrait from "../components/Portrait.astro";
 import Layout from "../layouts/Layout.astro";
 import { markdownPath } from "../lib/feeds";
 import { type ContentPage, getContentPages } from "../lib/pages";
+import { pageSegments } from "../lib/page-photos";
 
 export async function getStaticPaths() {
   const pages = await getContentPages();
@@ -11,7 +12,8 @@ export async function getStaticPaths() {
 }
 
 const page = Astro.props as ContentPage;
-const { Content } = await render(page.entry);
+// Rendered Markdown, split where photos go (see src/lib/page-photos.ts).
+const segments = pageSegments(page.slug, page.entry.rendered?.html ?? "");
 ---
 
 <Layout
@@ -22,6 +24,15 @@ const { Content } = await render(page.entry);
 >
   <content data-page={page.slug ?? "home"}>
     {page.slug === undefined && <Portrait />}
-    <Content />
+    {
+      segments.map(({ html, photos }) => (
+        <>
+          <Fragment set:html={html} />
+          {photos.map((photo) => (
+            <PagePhoto {...photo} />
+          ))}
+        </>
+      ))
+    }
   </content>
 </Layout>
