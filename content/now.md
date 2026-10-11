@@ -11,11 +11,19 @@ Founding Engineer at [LeftLane](https://www.leftlanesoftware.com/), full-stack T
 
 ## Sport
 
-Swimming.
+Only swimming for now.
 
 ## Reading
 
-*The Wealth of Nations* by Adam Smith, plus a few I've paused on: *The Autobiography of Benjamin Franklin*, *Designing Data-Intensive Applications* by Martin Kleppmann, and *The Design of Everyday Things* by Don Norman.
+Currently reading:
+
+- *The Wealth of Nations* by Adam Smith
+
+Paused:
+
+- *The Autobiography of Benjamin Franklin*
+- *Designing Data-Intensive Applications* by Martin Kleppmann
+- *The Design of Everyday Things* by Don Norman
 
 ## Music
 
