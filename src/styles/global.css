@@ -181,7 +181,9 @@
       margin: 1.25rem 0 0.75rem;
     }
 
-    & :is(h1, h2) + p:has(> em:only-child) {
+    /* "*Updated on ...*" line under the title. h1 only: :only-child
+       ignores text, so "*Title* by Author" under an h2 would match too. */
+    & h1 + p:has(> em:only-child) {
       color: var(--color-muted);
       font-size: 0.875em;
     }

@@ -1,33 +1,29 @@
 # What I'm doing now
-*Updated on February 1, 2026*
+*Updated on October 11, 2026*
 
 ## Work
 
-Founding Engineer at [LeftLane Software](https://leftlanesoftware.com/)
+Founding Engineer at [LeftLane](https://www.leftlanesoftware.com/), full-stack TypeScript on Cedar. Lately I've been:
 
-- Full-stack TS development with [RedwoodJS](https://redwoodjs.com/)
-- Building a consumer report experience to help dealerships make loan decisions
-- Improving our tool and design to continue shipping fast 
+- bringing dealers' own data into ChatGPT with a LeftLane plugin
+- letting dealers search their lists in plain English, so "accounts less than 30 days past due" filters and sorts the table for them
+- improving our developer experience with per-worktree databases and a move to ESM and Vitest
 
 ## Sport
-- Cross-discipline fitness / functional fitness at [Squad-Gym Tetreaultville](https://www.facebook.com/squadgymtetreaultville/)
-- Cycling with [Moose Porter Fixie](https://moosebicycle.com/collections/fixies/products/porter)
-- Freestyle downhill skiing when it snows ⛷️❄️
+
+Swimming, biking on a minimalist fixie, and freestyle downhill skiing.
 
 ## Reading
-- The Product Book by Product School
-- The Lean Startup by Eric Ries (revisiting after 8 years)
-- The Autobiography of Benjamin Franklin
+
+*The Wealth of Nations* by Adam Smith.
 
 ## Music
 
-- USB by Fred again..
-- Deadbeat by Tame Impala
-- DON’T TAP THE GLASS by Tyler, The Creator 
+Flying Lotus, Anderson .Paak, Kenny Beats and Denzel Curry, A$AP Rocky, and a lot of J Dilla, Madlib and The Alchemist.
 
-## Game
-- Fortnite
-- Hearthstone Battlegrounds
+## Games
+
+Fortnite, Balatro, Puyo Puyo Tetris and Mario Kart World.
 
 ---
 
