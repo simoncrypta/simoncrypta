@@ -20,7 +20,7 @@ const { Content } = await render(page.entry);
   isArticle={page.slug !== undefined}
   markdownPath={markdownPath(page.path)}
 >
-  <content>
+  <content data-page={page.slug ?? "home"}>
     {page.slug === undefined && <Portrait />}
     <Content />
   </content>
