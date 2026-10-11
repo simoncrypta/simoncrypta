@@ -6,16 +6,16 @@
 Founding Engineer at [LeftLane](https://www.leftlanesoftware.com/), full-stack TypeScript on Cedar. Lately I've been:
 
 - bringing dealers' own data into ChatGPT with a LeftLane plugin
-- letting dealers search their lists in plain English, so "accounts less than 30 days past due" filters and sorts the table for them
+- letting dealers search their lists in plain English
 - improving our developer experience with per-worktree databases and a move to ESM and Vitest
 
 ## Sport
 
-Swimming, biking on a minimalist fixie, and freestyle downhill skiing.
+Swimming.
 
 ## Reading
 
-*The Wealth of Nations* by Adam Smith.
+*The Wealth of Nations* by Adam Smith, plus a few I've paused on: *The Autobiography of Benjamin Franklin*, *Designing Data-Intensive Applications* by Martin Kleppmann, and *The Design of Everyday Things* by Don Norman.
 
 ## Music
 
