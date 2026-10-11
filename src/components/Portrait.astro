@@ -1,24 +1,25 @@
 ---
-import { SITE_CONFIG } from "../config";
+import { Picture } from "astro:assets";
+// Swap this file to change the photo; Astro generates the AVIF/WebP sizes.
+import portrait from "../assets/portrait.jpg";
 
-const { sources, fallback, size, alt } = SITE_CONFIG.portrait;
+const alt = "Simon Gagnon smiling, with curly dark hair and a moustache";
 ---
 
 <figure
   data-particle-portrait
   class="group relative float-right m-0 mb-2 ml-8 aspect-square w-44 touch-pan-y [&~h1+p]:clear-right mobile:float-none mobile:mb-6 mobile:ml-0 mobile:w-40"
 >
-  <picture>
-    {sources.map(({ src, type }) => <source srcset={src} type={type} />)}
-    <img
-      src={fallback}
-      alt={alt}
-      width={size}
-      height={size}
-      decoding="async"
-      class="block size-full rounded-full object-cover transition-opacity duration-300 group-data-ready:opacity-0"
-    />
-  </picture>
+  <Picture
+    src={portrait}
+    alt={alt}
+    formats={["avif", "webp"]}
+    widths={[176, 352, 528]}
+    sizes="(max-width: 768px) 160px, 176px"
+    loading="eager"
+    decoding="async"
+    class="block size-full rounded-full object-cover transition-opacity duration-300 group-data-ready:opacity-0"
+  />
   <canvas
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 -z-10 size-full opacity-0 transition-opacity duration-300 group-data-ready:opacity-100"

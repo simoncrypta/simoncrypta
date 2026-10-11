@@ -84,9 +84,10 @@ export function mountParticlePortrait(figure: HTMLElement): () => void {
   let size = 0; // photo size, CSS px
   let margin = 0; // canvas overflow left, above and below, CSS px
   let marginRight = 0; // overflow to the right, limited by the viewport
+  let pixelRatio = 1; // devicePixelRatio the canvas was sized for
   let frame = 0;
   let lastTime = 0;
-  let visible = true;
+  let visible = true; // the canvas intersects the viewport
   let disposed = false;
 
   /** Overflow to the right that stays inside the viewport (no sideways scroll). */
@@ -103,7 +104,7 @@ export function mountParticlePortrait(figure: HTMLElement): () => void {
     marginRight = Math.min(margin, rightRoom());
     const width = size + margin + marginRight;
     const height = size + margin * 2;
-    const ratio = devicePixelRatio || 1;
+    const ratio = (pixelRatio = devicePixelRatio || 1);
     Object.assign(canvas!.style, {
       inset: `${-margin}px auto auto ${-margin}px`,
       width: `${width}px`,
@@ -284,8 +285,15 @@ export function mountParticlePortrait(figure: HTMLElement): () => void {
   const resizeObserver = new ResizeObserver(() => {
     if (figure.clientWidth !== size) build();
   });
+  let resizeFrame = 0;
   function onWindowResize() {
-    if (dots.length && Math.min(margin, rightRoom()) !== marginRight) build();
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => {
+      // Zooming changes devicePixelRatio; the canvas must follow to stay sharp.
+      const changed =
+        Math.min(margin, rightRoom()) !== marginRight || (devicePixelRatio || 1) !== pixelRatio;
+      if (dots.length && changed) build();
+    });
   }
   const intersectionObserver = new IntersectionObserver(([entry]) => {
     visible = entry?.isIntersecting ?? true;
@@ -306,7 +314,8 @@ export function mountParticlePortrait(figure: HTMLElement): () => void {
       if (disposed) return;
       build();
       resizeObserver.observe(figure);
-      intersectionObserver.observe(figure);
+      // The canvas covers the whole drift area, not just the photo.
+      intersectionObserver.observe(canvas);
     })
     .catch(() => {
       // Keep the plain photo.
@@ -315,6 +324,7 @@ export function mountParticlePortrait(figure: HTMLElement): () => void {
   return () => {
     disposed = true;
     sleep();
+    cancelAnimationFrame(resizeFrame);
     resizeObserver.disconnect();
     intersectionObserver.disconnect();
     figure.removeEventListener("pointermove", onPointerMove);
